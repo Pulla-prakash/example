@@ -547,5 +547,31 @@ List<HospitalBranch> branchList = hospitalBranchService.getAllHospitalbranch();
 		return "redirect:/patientappointments/"
 				+ appointmentService.getAppointmentById(appid).getPatient().getPatientId();
 	}
+	
+	// Patient Appointment view 683
+		@RequestMapping(value = "appointmentpayment", method = RequestMethod.GET)
+		public String appointmentpayment(Model model,HttpServletRequest request) {
+//			Appointment appointment = appointmentService.getAppointmentById(appid);
+//			model.addAttribute("hospital", hospitalBranchService.getHospitalbranchId(appointment.getHospitalBranchId()));
+//			model.addAttribute("appointment", appointment);
+			
+			String date = request.getParameter("date");
+			String slot = request.getParameter("slot");
+			String hbid = request.getParameter("hbid");
+			String pid = request.getParameter("patientId");
+			String docid = request.getParameter("doctorId");
+			HospitalBranch hb=hospitalBranchService.getHospitalbranchId(Integer.parseInt(hbid));
+			Patients p=patientsService.getPatientById(Integer.parseInt(pid));
+			Doctor d=doctorService.GetDocotorById(Integer.parseInt(docid));
+			model.addAttribute("hospital",hb);
+			model.addAttribute("patient",p);
+			model.addAttribute("doctor",d);
+			model.addAttribute("slot",slot);
+			model.addAttribute("date",date);
+			
+			///saveappointment/{did}
+			return "appointmentpayment";
+		}
+		
 
 }

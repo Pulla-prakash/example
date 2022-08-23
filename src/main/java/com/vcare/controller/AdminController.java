@@ -29,6 +29,7 @@ import com.vcare.beans.HospitalBranch;
 import com.vcare.beans.Insurance;
 import com.vcare.beans.News;
 import com.vcare.beans.SocialNetworks;
+import com.vcare.beans.popularOffers;
 import com.vcare.repository.AppointmentRepository;
 import com.vcare.repository.DoctorRepository;
 import com.vcare.repository.ServiceRepository;
@@ -42,6 +43,7 @@ import com.vcare.service.InsuranceService;
 import com.vcare.service.NewsService;
 import com.vcare.service.PatientsService;
 import com.vcare.service.SocialNetworkService;
+import com.vcare.service.popularOfferService;
 import com.vcare.utils.VcareUtilies;
 
 @Controller
@@ -86,6 +88,10 @@ public class AdminController {
 
 	@Autowired
 	DoctorRepository doctorRepository;
+	
+	@Autowired
+	
+	popularOfferService offerService;
 
 	@Autowired
 
@@ -172,6 +178,9 @@ public class AdminController {
 		List<Insurance> list = insuranceService.getAllInsurance();
 		model.addAttribute("insurancelist", list);
 
+		List<popularOffers> listoffer = offerService.getAllOffers();
+	        model.addAttribute("listoffers", listoffer);
+		
 		log.info("Hospital:::::" + hospList);
 		final StringBuffer url1 = request.getRequestURL();
 		HttpSession session1 = request.getSession();

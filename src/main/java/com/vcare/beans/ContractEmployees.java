@@ -1,12 +1,18 @@
 package com.vcare.beans;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,10 +40,27 @@ public class ContractEmployees {
 	private String about;
 	private String email;
 	private String password;
+	private String services;
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "offerId")
+    public popularOffers popularOffers;
+
 	
 	
 	
-	
+	public popularOffers getPopularOffers() {
+		return popularOffers;
+	}
+	public void setPopularOffers(popularOffers popularOffers) {
+		this.popularOffers = popularOffers;
+	}
+	public String getServices() {
+		return services;
+	}
+	public void setServices(String services) {
+		this.services = services;
+	}
 	public String getCaptchaContract() {
 		return captchaContract;
 	}
@@ -124,6 +147,7 @@ public class ContractEmployees {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 	
 	
 	

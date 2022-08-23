@@ -15,14 +15,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.vcare.beans.Aboutus;
-import com.vcare.beans.Appointment;
 import com.vcare.beans.ContractEmployees;
-import com.vcare.beans.Employees;
-import com.vcare.beans.HospitalBranch;
+import com.vcare.beans.popularOffers;
+import com.vcare.repository.ContractEmployeeRepository;
 import com.vcare.service.ContractEmployeesService;
+import com.vcare.service.popularOfferService;
 import com.vcare.utils.VcareUtilies;
 
 @Controller
@@ -32,12 +31,23 @@ public class ContractEmployeeController {
 	
 	ContractEmployeesService  ContractEmployeeService;
 	
+	@Autowired
+	popularOfferService popularOfferService;
+	
+	@Autowired
+	
+	ContractEmployeeRepository   contractEmployeeRepository ;
 	
 
-	@RequestMapping(value = ("/addcontractEmployee"), method = RequestMethod.GET)
-	public String newAbout(Model model, @ModelAttribute(value = "objContract") ContractEmployees  contractEmployees) {
+	@RequestMapping(value = ("/addcontractEmployee/{id}"), method = RequestMethod.GET)
+	public String newAbout(Model model,@PathVariable("id") int id, ContractEmployees  contractEmployees,HttpServletRequest request) {
 		
-		model.addAttribute("contractObj", contractEmployees);
+		popularOffers popularOffers =popularOfferService.getoOfferById(id);
+		HttpSession session=request.getSession();
+		session.setAttribute("sessionId", popularOffers.getId());
+	 //  model.addAttribute("offerid", popularOffers.getId());
+		model.addAttribute("objContract", contractEmployees);
+		model.addAttribute("objContractId", contractEmployees.getId());
 
 		return "contractemployeeform";
 
@@ -125,5 +135,17 @@ public class ContractEmployeeController {
 			}
 
 		}
+	  
+	  
+	  
+	  @GetMapping("/service/{Pid}")
+	  public String serviceById(Model model,@PathVariable("Pid") int Pid) {
+		  
+		 List<ContractEmployees> offers=contractEmployeeRepository.empDriverList(Pid);	  
+		  System.err.println("list of employee:::::"+offers);
+		 model.addAttribute("offer", offers);
+		  
+		  return"popularservices";
+	  }
 
 }

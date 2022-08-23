@@ -53,6 +53,7 @@
 						<!-- page Heading -->
 						<div class="page-heading">
 							<h1>Contract Employee Details</h1>
+							<a th:href="@{/addcontractEmployee/{id}(id=${session.sessionId})}">Add ContractEmployee</a>
 						</div>
 						<h5 style=color:darkgreen th:text="${adminmsg}"></h5>
 						<div>
@@ -68,6 +69,7 @@
 										<th>Gender</th>
 										<th>Experience</th>
 										<th>Qualification</th>
+										<th>Service</th>
 										<th>Action</th>
 									</tr>
 								</thead>
@@ -82,6 +84,7 @@
 											<td th:text="${contractempObj .gender}"></td>
 											<td th:text="${contractempObj .experience}"></td>
 										<td th:text="${contractempObj . qualification}"></td>
+										<td th:text="${contractempObj . Services}"></td>
 										
 										<td><select name="table"
 											onchange="location = this.value;">

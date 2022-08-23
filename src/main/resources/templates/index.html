@@ -280,86 +280,29 @@
 			<div class="slider-whole-box">
 				<div align="center" class="slider-box">
 					<!-- slider -->
-					<div class="slider-self">
-						<div class="slider-inside-box">
-							<div class="news-thumb wow fadeInUp" data-wow-delay="0.2s">
-								<div class="team-info">
-									<!-- <a href="#"> <img src="images/medical-.png"
-										class="img-responsive" alt="" />
-									</a> -->
-									<h6>
-										<a th:href="@{/page/dynamicservices/{id}(id=${serObj})}">
-											<h6>Lab Test</h6>
-											<th th:text="${serObj}"></th>
-										</a>
-									</h6>
-									<span class="plus-box"></span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="slider-self">
-						<div class="slider-inside-box">
-							<div class="news-thumb wow fadeInUp" data-wow-delay="0.2s">
-								<div class="team-info">
-									<a href="#"> <img src="images/nur1.png"
-										class="img-responsive" alt="" />
-									</a>
-									<h6>
-										<a th:href="@{/page/dynamicservices/{id}(id=${serObj})}">
-											<h6>Nursing</h6>
-											<th th:text="${serObj}"></th>
-										</a>
-									</h6>
-									<span class="plus-box"></span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="slider-self">
-						<div class="slider-inside-box">
-							<div class="news-thumb wow fadeInUp" data-wow-delay="0.2s">
-								<div class="team-info">
-									<a href="#"> <img src="images/physio.png"
-										class="img-responsive" alt="" />
-									</a>
-									<h6>
-										<a th:href="@{/page/dynamicservices/{id}(id=${serObj})}">
-											<h6>Physiotheraphy</h6>
-											<th th:text="${serObj}"></th>
-										</a>
-									</h6>
-									<span class="plus-box"></span>
-								</div>
-							</div>
-						</div>
-					</div>
-					                     
-
-					<div class="slider-self">
-						<div class="slider-inside-box">
-							<div class="news-thumb wow fadeInUp" data-wow-delay="0.2s">
-								<div class="team-info">
-									<a href="#"> <img src="images/bed.png"
-										class="img-responsive" alt="" />
-									</a>
-									<h6>
-										<a th:href="@{/page/dynamicservices/{id}(id=${serObj})}">
-											<h6>Beside Attendent</h6>
-											<th th:text="${serObj}"></th>
-										</a>
-									</h6>
-									<span class="plus-box"></span>
-								</div>
-							</div>
-						</div>
-					</div>
+					<div th:each="offersObj:${listoffers}">
+                        <div class="slider-self">
+                            <div class="slider-inside-box">
+                                <div class="news-thumb wow fadeInUp" data-wow-delay="0.2s">
+                                    <div class="team-info">
+                                        <a href="#"> <img alt=" "
+                                            th:src="*{'data:newsImage/jpeg;base64,'+{offersObj.image}}"
+                                            style="width: 450px; height: 200px;">
+                                        </a>
+                                       <h6>
+                                            <a th:href="@{/service/{Cid}(Cid=${offersObj.id})}">
+                                                <th th:text="${offersObj.name}"></th>
+                                            </a>
+                                        </h6>
+                                        <span class="plus-box"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 				</div>
 			</div>
 		</div>
-		<center>
-			<div class="btn-news btn-contests"></div>
-		</center>
 	</section>
 
 

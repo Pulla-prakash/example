@@ -96,18 +96,23 @@
 
 
 								
+										
+										<div class="col-md-3">
 										<div class="col-md-3">
 
 											<input type="hidden" class="form-control"
 												placeholder="Enter Your Id" id="age" name="age"
 												th:value="${age}" th:readonly="true">
 										</div>
-										
-										<div class="col-md-3">
+											
 
 											<input type="hidden" class="form-control"
 												placeholder="Enter Your Id" id="id" name="id"
 												th:value="*{id}" >
+												
+											<input type="hidden" class="form-control"
+												placeholder="Enter Your Id" id="popularOffers" name="popularOffers"
+												th:value="${session.sessionId}" >
 										</div>
 									<div class="row">
 										<div class="col-md-3">
@@ -126,6 +131,7 @@
 												<option value="other">Others</option>
 											</select>
 										</div>
+										
 										
 										
 									
@@ -151,41 +157,24 @@
 										</div>
 										
 										<div class="col-md-3">
-											<label for="gender">password</label> <input type="text"
+											<label for="gender">password</label> <input type="password"
 												class="form-control" id="password" name="password"
 												th:value="*{password}" >
 										</div>
-										<div class="col-md-3">
+									
+
+                                                    </div>
+										<div class="row">
+										
+											<div class="col-md-3">
 											<label for="active">Qualification</label> <input type="text"
 												class="form-control" placeholder="Qualification"
 												id="qualification" name="qualification"
 												th:value="*{qualification}" required>
 										</div>
 										
-
-                                                    </div>
-
-
-
-                                              <!--      <div class="col-xl-4">
-                                                        <div class="submit-field">
-                                                            <h5>Age</h5>
-                                                            <input type="text" th:value="*{age}"
-                                                                id="age" name="age" placeholder="age"
-                                                                class="form-control mb-8 col-12" readonly />
-                                                        </div>
-                                                    </div> -->
-										
-										<div class="row">
-<!-- 
-										<div class="col-md-3">
-											<label for="Update">Address</label> <input type="text"
-												class="form-control" placeholder="Address" id="Address"
-												name="Address" th:value="*{Address}">
-										</div>
-									 -->
 									 
-										<div class="submit-field">
+										<div class="col-md-3">
                                                             <h4>Date Of Birth</h4>
                                                             <input type="date" th:value="*{DOB}"
                                                                 id="date" name="DOB" placeholder="dateOfBirth"
@@ -197,6 +186,12 @@
 											<label for="sep"> Fee</label> <input type="Numeric"
 												class="form-control" id="doctorFee" name="doctorFee"
 												th:value="*{Fee}">
+										</div>
+										
+										<div class="col-md-3">
+											<label for="sep">Service Name</label> <input type="text"
+												class="form-control" id="services" name="services"
+												th:value="*{services}">
 										</div>
 										
 						<!-- 				<div class="col-md-3">
