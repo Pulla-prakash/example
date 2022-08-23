@@ -47,7 +47,7 @@
 	</section>
 	 -->
 	
-	
+<!-- 	
 	<section id="team" data-stellar-background-ratio="1"
 		class="team-section">
 		<div class="container">
@@ -57,21 +57,21 @@
 			<div class="clearfix"></div>
 			<div class="slider-whole-box">
 				<div align="center" class="slider-box">
-					<!-- slider -->
+					slider
 					<div th:each="offersObj:${offer}">
                         <div class="slider-self">
                             <div class="slider-inside-box">
                                 <div class="news-thumb wow fadeInUp" data-wow-delay="0.2s">
                                     <div class="team-info">
-                                       <!--  <a href="#"> <img alt=" "
+                                        <a href="#"> <img alt=" "
                                             th:src="*{'data:newsImage/jpeg;base64,'+{offersObj.image}}"
                                             style="width: 450px; height: 200px;">
                                         </a>
-                                         -->
+                                        
                                         <a href="#"> <img src="../images/health.png" alt="" />
 									</a>
                                        <h6>
-                                            <!-- <a th:href="@{/service/{Cid}(Cid=${offersObj.id})}"> -->
+                                            <a th:href="@{/service/{Cid}(Cid=${offersObj.id})}">
                                                 <th th:text="${offersObj.services}"></th>
                                             </a>
                                         </h6>
@@ -85,6 +85,52 @@
 			</div>
 		</div>
 	</section>
+	 -->
+	
+	
+	
+	
+	<section id="team" data-stellar-background-ratio="1"
+		class="team-section">
+		<div class="container">
+			<div class="about-info">
+				<h2 class="wow fadeInUp" align="center" data-wow-delay="0.1s">
+					Vcare Media Coverage</h2>
+			</div>
+			<div class="clearfix"></div>
+			<div class="slider-whole-box">
+				<div align="center" class="slider-box">
+					<!-- slider -->
+					<div th:each="offersObj:${offer}">
+						<div class="slider-self">
+							<div class="slider-inside-box">
+								<div class="news-thumb wow fadeInUp" data-wow-delay="0.2s">
+									<div class="team-info">
+										<img src="../images/health.png"
+										class="img-responsive" alt="" /> 
+										<h6>
+											<!--  th:href="@{/news/newsdetails/{id}(id=${empObj.NewsId})}" -->
+											<a	th:text="${offersObj.services}"></a>
+										</h6>
+										<span class="plus-box"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<center>
+			<div class="btn-news btn-contests">
+				<h5>
+					<a style="color: DodgerBlue;" th:href="@{/news/viewAllNews}">VIEW
+						ALL NEWS</a>
+				</h5>
+			</div>
+		</center>
+	</section>
+	
 
 	
 
