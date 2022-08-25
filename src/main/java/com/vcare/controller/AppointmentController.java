@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.vcare.beans.Appointment;
+import com.vcare.beans.ContractEmployees;
 import com.vcare.beans.Doctor;
 import com.vcare.beans.HospitalBranch;
 import com.vcare.beans.Patients;
@@ -34,6 +35,7 @@ import com.vcare.repository.DoctorRepository;
 import com.vcare.repository.PaymentRepository;
 import com.vcare.repository.ServiceRepository;
 import com.vcare.service.AppointmentService;
+import com.vcare.service.ContractEmployeesService;
 import com.vcare.service.DoctorService;
 import com.vcare.service.EmailSenderService;
 import com.vcare.service.HospitalBranchService;
@@ -48,6 +50,8 @@ public class AppointmentController {
 	DoctorService doctorService;
 	@Autowired
 	PatientsService patientsService;
+@Autowired
+ContractEmployeesService contractEmployeesService;
 	@Autowired
 	HospitalBranchService hospitalBranchService;
 	@Autowired
@@ -573,5 +577,25 @@ List<HospitalBranch> branchList = hospitalBranchService.getAllHospitalbranch();
 			return "appointmentpayment";
 		}
 		
+		@RequestMapping(value = "appointmentService", method = RequestMethod.GET)
+		public String appointmentForServices(Model model,HttpServletRequest request) {
+			String date = request.getParameter("date");
+			String slot = request.getParameter("slot");
+			String pid = request.getParameter("patientId");
+			String cid = request.getParameter("id");
+			System.err.println(";;;;;;;;;;;;;"+date);
+			System.err.println(";;;;;;;;;;;;;"+slot);
+			
+			Patients p=patientsService.getPatientById(Integer.parseInt(pid));
+			ContractEmployees contractEmployees =contractEmployeesService.getContactEmployeeById(Integer.parseInt(cid));
+			System.err.println(";;;;;;;;;;"+contractEmployees.getFee());
+			model.addAttribute("patient",p);
+			model.addAttribute("slot",slot);
+			model.addAttribute("date",date);
+			model.addAttribute("contract",contractEmployees);
+			
+			///saveappointment/{did}
+			return "appointmentservices";
+		}
 
 }

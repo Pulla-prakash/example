@@ -50,6 +50,12 @@ public class Appointment {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "patientId")
 	private Patients patient;
+	
+	// Child
+	// For contractEmloyee name,age,gender from Patient
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id")
+	private ContractEmployees  contractEmployees;
 
 	// Child
 	// For patient name,age,gender from Patient

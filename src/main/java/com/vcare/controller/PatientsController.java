@@ -10,8 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.vcare.beans.Appointment;
+import com.vcare.beans.ContractEmployees;
 import com.vcare.beans.Doctor;
 import com.vcare.beans.HospitalBranch;
 import com.vcare.beans.Patients;
+import com.vcare.repository.ContractEmployeeRepository;
 import com.vcare.repository.PatientsRepository;
 import com.vcare.repository.ServiceRepository;
 import com.vcare.service.AppointmentService;
@@ -43,6 +43,9 @@ import com.vcare.utils.VcareUtilies;
 
 public class PatientsController {
 
+	
+	@Autowired
+	ContractEmployeeRepository contractEmployeeRepository;
 	@Autowired
 	PatientsService patientService;
 	@Autowired
@@ -146,6 +149,32 @@ public class PatientsController {
 			session.setAttribute("pId", signinObj.getPatientId());
 			model.addAttribute("patientmsg","Hello "+signinObj.getFirstName()+", you have successfully logged in " );
 			return "patientdashboard";
+		}
+		session.setAttribute("indexmsg","logininvalidpasswordorusername");
+		return "redirect:/";
+	}
+	
+	
+	@GetMapping("/Paloginvalid/{id}")
+	public String loginValidations(Model model, @ModelAttribute(value = "patientObj") Patients patientObj,@PathVariable("id") int id,
+			HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (!patientObj.getCaptcha().equals(patientObj.getUserCaptcha())) {
+			session.setAttribute("indexmsg","logininvalidcaptcha");
+			return "redirect:/";
+		}
+		model.addAttribute("warninig", "invalid credentials..please try to login again...!");
+		String str = VcareUtilies.getEncryptSecurePassword(patientObj.getPatientPassword(), "vcare");
+		Patients signinObj = patientService.getPatient(patientObj.getPatientMailId(), str);
+		model.addAttribute("patientObj", signinObj);
+		if (signinObj != null) {
+			 List<ContractEmployees> offers=contractEmployeeRepository.empDriverList(id);	
+			 model.addAttribute("offer", offers);
+			 model.addAttribute("pId", signinObj.getPatientId());
+			session.setAttribute("name", signinObj.getFirstName());
+			session.setAttribute("pId", signinObj.getPatientId());
+			model.addAttribute("patientmsg","Hello "+signinObj.getFirstName()+", you have successfully logged in " );
+			return "popularservices";
 		}
 		session.setAttribute("indexmsg","logininvalidpasswordorusername");
 		return "redirect:/";

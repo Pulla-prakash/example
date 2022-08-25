@@ -1,7 +1,9 @@
 package com.vcare.beans;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -45,6 +47,10 @@ public class ContractEmployees {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "offerId")
     public popularOffers popularOffers;
+	
+	
+	@OneToMany(mappedBy = "contractEmployees")
+	private Set<Appointment> appointment = new HashSet<Appointment>();
 
 	
 	
@@ -54,6 +60,13 @@ public class ContractEmployees {
 	}
 	public void setPopularOffers(popularOffers popularOffers) {
 		this.popularOffers = popularOffers;
+	}
+	
+	public Set<Appointment> getAppointment() {
+		return appointment;
+	}
+	public void setAppointment(Set<Appointment> appointment) {
+		this.appointment = appointment;
 	}
 	public String getServices() {
 		return services;

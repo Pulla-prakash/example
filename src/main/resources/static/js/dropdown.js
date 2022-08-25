@@ -68,6 +68,13 @@ function selectedDate(date){
 	document.getElementById('doc').action=appname+"/Viewdoctors?getQryDate=selectDate&Date="+date;
 	document.getElementById('doc').submit();
 }
+function selectedSlots(date){
+	var appname=window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/ihgufyd'));
+	var contractempid=document.getElementById('id').value;
+	var pid=document.getElementById('patientId').value;
+	document.getElementById('contract').action=appname+"/ViewSlots?getQryDate=selectDate&Date="+date;
+	document.getElementById('contract').submit();
+}
 
 function dateAvailable(date){
 var appname=window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/ihgufyd'));
