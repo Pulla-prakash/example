@@ -17,6 +17,7 @@
 	<description>first project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
+		<startclass>com.vcare.VcareProjectApplication</startclass>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -44,11 +45,7 @@
 			<optional>true</optional>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
@@ -93,6 +90,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -133,18 +137,23 @@
 	</dependencies>
 
 	<build>
+	<finalName>Vcare</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
+				
+					<executions>
+					     <execution>
+					        <goals>
+					             <goal>repackage</goal>
+					             </goals>
+					           <configuration>  
+						         <mainClass>com.vcare.VcareProjectApplication</mainClass>
+						</configuration>
+						</execution>
+						</executions>
+				
 			</plugin>
 		</plugins>
 	</build>

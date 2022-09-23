@@ -39,7 +39,6 @@
 							<div class="Heading">
 								<h4>Dashboard</h4>
 							</div>
-							
 							<div class="sidebar-item">
 								<img src="/images/Icons/app.png" alt=" icon" class="img-fluid">
 								<a href="/hospital/hospitalList">Hospital</a>
@@ -51,7 +50,7 @@
 							</div>
 							<div class="sidebar-item">
 								<img src="/images/Icons/profile.png" alt="icon" class="img-fluid">
-								<a th:href="@{/patientsList}">Patient</a>
+								<a th:href="@{/patient/patientsList}">Patient</a>
 							</div>
 							<div class="sidebar-item">
 								<img src="/images/Icons/profile.png" alt="icon" class="img-fluid">
@@ -60,7 +59,7 @@
 							
 							<div class="sidebar-item">
 								<img src="/images/Icons/profile.png" alt="icon" class="img-fluid">
-								<a th:href="@{/insurancelist/{id}(id=${session.AdminId})}">Insurance</a>
+								<a th:href="@{/Insurance/insurancelist/{adminid}(adminid=${session.AdminId})}">Insurance</a>
 							</div>
 
 							
@@ -71,10 +70,28 @@
 							
 							<div class="sidebar-item">
 								<img src="/images/Icons/pprofile.png" alt="icon" class="img-fluid">
-								<a th:href="@{/network}">Social Network</a>
+								<a th:href="@{/SocialNetwork/networkList}">Social Network</a>
 							</div>
-
-
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/payments}">Payments</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/Aboutus/addabout}">About Us</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/popularoffer/offerlist}">Offer services</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/laboratory/laboratoryList}">Laboratory</a>
+							</div>
 						</div>
 					</section>
 					<!-- sidebar end -->
@@ -169,13 +186,13 @@
 															th:href="@{/doctorProfile/{Bid}(Bid=${hospObj.hospitalBranchId})}">Add
 															Profile</a></li> -->
 															
-															<li><a th:href="@{/Dephome/{bid}(bid=${hospObj.hospitalBranchId})}"
+															<li><a th:href="@{/Department/departmentlist/{hospitalbranchId}(hospitalbranchId=${hospObj.hospitalBranchId})}"
                                                             >DepartmentList</a></li>
 													<li><a
 															th:href="@{/addAmbulance/{branchId}(branchId=${hospObj.hospitalBranchId})}">Add
 															Ambulance</a></li>
 													<li><a
-															th:href="@{/AddAmbdriver/{HbranchId}(HbranchId=${hospObj.hospitalBranchId})}">Add
+															th:href="@{/AmbulanceDriverController/AddAmbulanceDriver/{HbranchId}(HbranchId=${hospObj.hospitalBranchId})}">Add
 															Driver</a></li>
 												</ul>
 											</li>

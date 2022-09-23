@@ -9,6 +9,8 @@ import com.vcare.beans.Patients;
 public interface PatientsService {
 	List<Patients> getAllPatients();
 
+	List<Patients> getAllActivePatients();
+
 	void deletePatientById(int patientsId);
 
 	Patients addNewPatient(Patients patients);
@@ -25,7 +27,5 @@ public interface PatientsService {
 	
 	Patients findByMail(String patientMailId);
 	
-	public String sendSimpleEmail(String toEmail,
-			String body,
-			String subject);
+	
 }

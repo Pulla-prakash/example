@@ -9,10 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-//Ram
 import javax.persistence.Table;
 
-//Ram
+/*Descrption:This is the POJO class for Services.
+This table stores all services provided by each hospital branch.
+Author:NAYANI*/
 @Entity
 @Table(name = "services")
 public class Services {
@@ -21,7 +22,7 @@ public class Services {
 	private Integer serviceId;
 	private String serviceName;
 	private String description;
-	private char isActive;
+	private char isActive ='Y';
 	@Lob
 	private String image;
 

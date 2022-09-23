@@ -1,44 +1,32 @@
 package com.vcare.service;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-
 import com.vcare.beans.Appointment;
 import com.vcare.repository.AppointmentRepository;
-
 @Service
 public class AppointmentServiceImp implements AppointmentService {
-
-	// Appointment Service
 	@Autowired
 	AppointmentRepository appointmentRepository;
-
 	@Override
 	public List<Appointment> getAllAppointment() {
 		return appointmentRepository.findAll();
 	}
-
 	@Override
 	public Appointment getAppointmentById(long appointmentId) {
 		return appointmentRepository.getById(appointmentId);
 	}
-
 	@Override
 	public Appointment addAppointment(Appointment appointment) {
 		return appointmentRepository.save(appointment);
 	}
-
 	@Override
 	public void updateAppointment(Appointment appointment) {
 		appointmentRepository.save(appointment);
-
 	}
-
 	@Override
 	public void deleteAppointmentById(long appointmentId) {
 		try {
@@ -47,7 +35,6 @@ public class AppointmentServiceImp implements AppointmentService {
 			throw new RuntimeException(ex.getMessage());
 		}
 	}
-	
 	@Override
     public List<Appointment> getPatientAppointment(List<Appointment> appointment) {
         LocalDate startdate = LocalDate.now();
@@ -68,4 +55,13 @@ public class AppointmentServiceImp implements AppointmentService {
         }
         return appointment;
     }
+	@Override
+	public List<Appointment> getAllActiveAppointments() {
+		return appointmentRepository.getAllActiveAppointments();
+	}
+	@Override
+	public List<Appointment> getAllActiveAppointmentsByDoctorId(int doctorId) {
+		return appointmentRepository.getAllActiveAppointmentsByDoctorId(doctorId);
+	}
+	
 }

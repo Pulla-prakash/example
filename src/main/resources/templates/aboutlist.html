@@ -44,15 +44,61 @@
 							<div class="Heading">
 								<h4>Dashboard</h4>
 							</div>
-							<div class="sidebar-item">
-								<img src="../images/Icons/app.png" alt=" icon" class="img-fluid" />
-								<a href="./index.html">Appointments</a>
-							</div>
-							<div class="sidebar-item">
-								<img src="../images/Icons/pa.png" alt="icon" class="img-fluid" />
-								<a href="./patients.html">Patients</a>
+							   <div class="sidebar-item">
+								<img src="../images/Icons/app.png" alt=" icon" class="img-fluid">
+								<a href="/hospital/hospitalList">Hospital</a>
 							</div>
 							
+							<div class="sidebar-item">
+								<img src="../images/Icons/cal.png" alt="icon" class="img-fluid">
+								<a th:href="@{/Drlist}">Doctor</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/patient/patientsList}">Patient</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/Appointment}">Appointments</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/Insurance/insurancelist/{adminid}(adminid=${session.AdminId})}">Insurance</a>
+							</div>
+
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/pprofile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/news/newstable}">News</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/pprofile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/SocialNetwork/networkList}">Social Network</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/payments}">Payments</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/Aboutus/addabout}">About Us</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/popularoffer/offerlist}">Offer services</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/laboratory/laboratoryList}">Laboratory</a>
+							</div>
+						</div>
+
 						</div>
 					</section>
 					<!-- sidebar end -->
@@ -62,11 +108,9 @@
 					<div class="main-area">
 						<!-- page Heading -->
 						<div class="page-heading">
-							
 								  <div class="header-box">
 									<h1>Detail List</h1>
-									
-									 <a th:href="@{/addabout}" class="img-fluid"  >Add About</a>
+									 <a th:href="@{/Aboutus/addabout}" class="img-fluid"  >Add About</a>
 								  </div>
 						</div>
 						<!-- page Heading End -->
@@ -92,10 +136,10 @@
 										<ul class="pm">
 											<li><a href="#" title="#">Select</a>
 												<ul class="cm">
-													<li><a th:href="@{/editAbout/{id}(id=${aboutObj.id})}"
+													<li><a th:href="@{/Aboutus/editAbout/{aboutId}(aboutId=${aboutObj.id})}"
 															title="#">Edit</a></li>
 													<li><a
-															th:href="@{/deleteAbout/{id}(id=${aboutObj.id})}">Delete</a>
+															th:href="@{/Aboutus/deleteAbout/{aboutId}(aboutId=${aboutObj.id})}">Delete</a>
 													</li>
 													
 												</ul>

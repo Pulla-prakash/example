@@ -41,37 +41,57 @@
 								<h4>Dashboard</h4>
 							</div>
 							<div class="sidebar-item">
-								<img src="../images/Icons/app.png" alt=" icon" class="img-fluid">
+								<img src="/images/Icons/app.png" alt=" icon" class="img-fluid">
 								<a href="/hospital/hospitalList">Hospital</a>
 							</div>
 							
 							<div class="sidebar-item">
-								<img src="../images/Icons/cal.png" alt="icon" class="img-fluid">
+								<img src="/images/Icons/cal.png" alt="icon" class="img-fluid">
 								<a th:href="@{/Drlist}">Doctor</a>
 							</div>
 							<div class="sidebar-item">
-								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid">
-								<a th:href="@{/patientsList}">Patient</a>
+								<img src="/images/Icons/profile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/patient/patientsList}">Patient</a>
 							</div>
 							<div class="sidebar-item">
-								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid">
+								<img src="/images/Icons/profile.png" alt="icon" class="img-fluid">
 								<a th:href="@{/Appointment}">Appointments</a>
 							</div>
 							
 							<div class="sidebar-item">
-								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid">
-								<a th:href="@{/insurancelist/{id}(id=${session.AdminId})}">Insurance</a>
+								<img src="/images/Icons/profile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/Insurance/insurancelist/{adminid}(adminid=${session.AdminId})}">Insurance</a>
 							</div>
 
 							
 							<div class="sidebar-item">
-								<img src="../images/Icons/pprofile.png" alt="icon" class="img-fluid">
+								<img src="/images/Icons/pprofile.png" alt="icon" class="img-fluid">
 								<a th:href="@{/news/newstable}">News</a>
 							</div>
 							
 							<div class="sidebar-item">
-								<img src="../images/Icons/pprofile.png" alt="icon" class="img-fluid">
-								<a th:href="@{/network}">Social Network</a>
+								<img src="/images/Icons/pprofile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/SocialNetwork/networkList}">Social Network</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/payments}">Payments</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/Aboutus/addabout}">About Us</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/popularoffer/offerlist}">Offer services</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/laboratory/laboratoryList}">Laboratory</a>
 							</div>
 
 
@@ -87,7 +107,7 @@
 							<!-- <h1>Hospital Details</h1> -->
 							<div class="header-box">
 								<h1>Insurance List</h1>
-								<a th:href="@{/addInsurance/{id}(id=${admin.adminId})}" class="img-fluid">Add
+								<a th:href="@{/Insurance/addInsurance/{adminid}(adminid=${admin.adminId})}" class="img-fluid">Add
 									Insurance</a>
 							</div>
 							<h5 style=color:darkgreen th:text="${adminmsg}"></h5>
@@ -120,10 +140,10 @@
 											<li><a href="#" title="#">Select</a>
 												<ul class="cm">
 													<li><a
-															th:href="@{/editIns/{id}/{insid}(id=${admin.adminId},insid=${insuranceObj.insuranceId})}">Edit</a>
+															th:href="@{/Insurance/editInsurance/{adminid}/{insuranceid}(adminid=${admin.adminId},insuranceid=${insuranceObj.insuranceId})}">Edit</a>
 													</li>
 													<li><a
-															th:href="@{/deleteInsurance/{id}/{delid} (id=${admin.adminId},delid=${insuranceObj.insuranceId})}">Delete</a>
+															th:href="@{/Insurance/deleteInsurance/{adminid}/{insuranceid} (adminid=${admin.adminId},insuranceid=${insuranceObj.insuranceId})}">Delete</a>
 													</li>
 												</ul>
 											</li>

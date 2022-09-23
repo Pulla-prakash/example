@@ -79,7 +79,7 @@
 						<div class="page-heading">
 							<h1>Ambulance List</h1>
 					<div align="right">		
-		<a th:href="@{/addAmbulance/{branchId}(branchId=${hbid})}" class="img-fluid">Add Ambulance</a>
+		<a th:href="@{/Ambulance/addAmbulance/{branchId}(branchId=${hbid})}" class="img-fluid">Add Ambulance</a>
 </div>
 							
 						</div>
@@ -114,10 +114,10 @@
 											onchange="location = this.value;">
 											<option>Action</option>
 												<option
-													th:value="@{/editAmbulance/{id}(id=${ambObj.ambulanceId})}">edit
+													th:value="@{/Ambulance/editAmbulance/{ambulanceid}(ambulanceid=${ambObj.ambulanceId})}">edit
 												</option>
 												<option
-													th:value="@{/deleteAmbulance/{id}(id=${ambObj.ambulanceId})}">Delete</option>
+													th:value="@{/Ambulance/deleteAmbulance/{ambulanceid}(ambulanceid=${ambObj.ambulanceId})}">Delete</option>
 												<!-- <option th:value="@{/empid/{id}(id=${empObj.employeeId})}">Generate IDcard</option> -->
 										</select></td>
 									</tr>

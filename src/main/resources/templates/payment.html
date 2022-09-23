@@ -445,7 +445,7 @@ width: 30%;
 		<div class="container-fluid">
 			<div class="header-box">
 				<h4>Vcare</h4>
-				<a th:href="@{/logout}">LogOut</a>
+				<a th:href="@{/logoutDoc}">LogOut</a>
 
 			</div>
 	</header>
@@ -461,12 +461,11 @@ width: 30%;
 								<h4>Dashboard</h4>
 								<div class="sidebar-item">
 								<img src="../images/Icons/app.png" alt=" icon" class="img-fluid" />
-								<a th:href="@{/appointmentlist/{did}(did=${session.DocId})}">Appointments</a>
+								<a th:href="@{/appointment/appointmentlist/{did}(did=${session.DocId})}">Appointments</a>
 							</div>
-							
 							<div class="sidebar-item">
 								<img src="../images/Icons/cal.png" alt="icon" class="img-fluid" />
-								<a th:href="@{/availabilityList/{id}(id=${session.DocId})}">Availability</a>
+								<a th:href="@{/DoctorAvailability/availabilityList/{doctorId}(doctorId=${session.DocId})}">Availability</a>
 							</div>
 							<div class="sidebar-item">
 								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid" />
@@ -474,16 +473,13 @@ width: 30%;
 							</div>
 							<div class="sidebar-item">
 								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
-								<a th:href="@{/prescriptionlist/{did}(did=${session.DocId})}">Patients Prescription</a>
+								<a th:href="@{/Prescription/prescriptionlist/{doctorId}(doctorId=${session.DocId})}">Patients Prescription</a>
 							</div>
-							
 							<div class="sidebar-item">
 								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
 								<a th:href="@{/payment/{docId}(docId=${session.DocId})}">Payments</a>
 							</div>
-							</div>
-							
-
+						</div>
 						</div>
 					</section>
 					<!-- sidebar end -->
@@ -520,7 +516,7 @@ width: 30%;
 				<tbody align="center">
 					<tr th:each="pay:${objectapp}">
 						<td><a class="cut"></a><span  th:text="${pay.getPatient().getFirstName()}"></span></td>
-						<td><a class="cut"></a><span  th:text="${pay.getPatient().getPurpose()}"></span></td>
+						<td><a class="cut"></a><span  th:text="${pay.getPatientPurpose()}"></span></td>
 						<td><a class="cut"></a><span th:text="${pay.getDate()}+'  ; '+${pay.getSlot()}"><span data-suffix>mins</span></span></td>
 					<td  ><a class="cut"></a><span data-prefix></span><span th:text="${pay.getDoctor().getDoctorFee()}"></span></td>
 					</tr>

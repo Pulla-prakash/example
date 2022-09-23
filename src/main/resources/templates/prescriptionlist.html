@@ -33,7 +33,7 @@
 		<div class="container-fluid">
 			<div class="header-box">
 				<h4>Vcare</h4>
-				<a th:href="@{/logout}">LogOut</a>
+				<a th:href="@{/logoutDoc}">LogOut</a>
 			</div>
 		</div>
 	</header>
@@ -48,29 +48,26 @@
 							<div class="Heading">
 								<h4>Dashboard</h4>
 							</div>
-							<div class="sidebar-item">
-								<img src="../images/Icons/app.png" alt=" icon" class="img-fluid" />
-								<a th:href="@{/appointmentlist/{did}(did=${session.DocId})}">Appointments</a>
-							</div>
-							
-							<div class="sidebar-item">
-								<img src="../images/Icons/cal.png" alt="icon" class="img-fluid" />
-								<a th:href="@{/availabilityList/{id}(id=${session.DocId})}">Availability</a>
+								<div class="sidebar-item">
+								<img src="/images/Icons/app.png" alt=" icon" class="img-fluid" />
+								<a th:href="@{/appointment/appointmentlist/{did}(did=${session.DocId})}">Appointments</a>
 							</div>
 							<div class="sidebar-item">
-								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid" />
-								<a th:href="@{/updatedDoctorProfile/{did}(did=${session.DocId})}">Doctor Profile</a>
+								<img src="/images/Icons/cal.png" alt="icon" class="img-fluid" />
+								<a th:href="@{/DoctorAvailability/availabilityList/{doctorId}(doctorId=${session.DocId})}">Availability</a>
 							</div>
 							<div class="sidebar-item">
-								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
-								<a th:href="@{/prescriptionlist/{did}(did=${session.DocId})}">Patients Prescription</a>
+								<img src="/images/Icons/profile.png" alt="icon" class="img-fluid" />
+								<a th:href="@{/doctor/updatedDoctorProfile/{did}(did=${session.DocId})}">Doctor Profile</a>
 							</div>
-							
 							<div class="sidebar-item">
-								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
-								<a th:href="@{/payment/{docId}(docId=${session.DocId})}">Payments</a>
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/Prescription/prescriptionlist/{doctorId}(doctorId=${session.DocId})}">Patients Prescription</a>
 							</div>
-							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/doctor/payment/{docId}(docId=${session.DocId})}">Payments</a>
+							</div>
 						</div>
 					</section>
 					<!-- sidebar end -->
@@ -99,11 +96,9 @@
 											<th>Patient Name</th>
 											<th>Age</th>
 											<th>Gender</th>
-											<!-- <th>Contact Number</th> -->
 											<th>Purpose</th>
 											<th>Doctor</th>
 											<th>Patient Type</th>
-											<!-- <th>Prescription</th> -->
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -113,24 +108,12 @@
 											<td th:text="${prescriptionObjj.appointment.patient.firstName}"></td>
 											<td th:text="${prescriptionObjj.appointment.patient.patientAge}"></td>
 											<td th:text="${prescriptionObjj.appointment.patient.patientGender}"></td>
-										<!-- 	<td th:text="${prescriptionObjj.appointment.patient.patientMobile}"></td> -->
 											<td th:text="${prescriptionObjj.appointment.patientPurpose}"></td>
-											
-											<td
-												th:text="${prescriptionObjj.appointment.doctor.doctorName}">
-											</td>
+											<td th:text="${prescriptionObjj.appointment.doctor.doctorName}"></td>
 											<td th:text="${prescriptionObjj.patientType}"></td>
-											<!-- <td th:utext="${prescriptionObjj.prescription}"></td> -->
-											
-
-
-
-											<!-- HAVE TO CREATE FORIEGN KEY -->
 											<td>
-
 												<ul class="pm">
-													<li><a
-																	th:href="@{/prescription/{pesid}(pesid=${prescriptionObjj.prescriptionId})}">View Prescription</a>
+													<li><a th:href="@{/Prescription/viewPrescription/{pescriptionId}(pescriptionId=${prescriptionObjj.prescriptionId})}">View Prescription</a>
 														
 													</li>
 												</ul>

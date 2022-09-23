@@ -94,7 +94,7 @@
 												th:maxlength="100" required>
 										</div>
 										<div class="col-md-3">
-											<label for="patientName"></label> <input type="hidden"
+											<label for="patientName"></label> <input type="number"
 												class="form-control" name="prescriptionId"
 												th:value="*{prescriptionId}" th:minlength="1"
 												th:maxlength="100" required>
@@ -174,18 +174,41 @@
 												required="required" th:minlength="1" th:maxlength="100">
 
 										</div>
-
+									</div>
+									<div class="row">
+																				
+										<div class="col-md-3">
+											<label>Select Lab Tests</label> 
+											<input th:if="${prescription=='null'}"
+												type="checkbox" th:each="test,count:${testlist}"
+												name="labTestId" id="labTestId"
+												th:text="${test.testName}"
+												th:value="${test.testId}"/>
+											<input
+												type="checkbox" th:each="test,count:${selectedlist}"
+												th:if="${prescription}=='notnull'"
+												name="labTestId" id="labTestId"
+												th:text="${test.testName}"
+												th:value="${test.testId}" checked/>
+											<input th:if="${prescription}=='notnull'" th:each="total:${labtestlist}"
+												type="checkbox" 
+												name="labTestId" id="labTestId"
+												th:text="${total.testName}"
+												th:value="${total.testId}"/>
+											
+										</div>
 										
 										<div class="col-md-9+">
 										<label> Prescription</label>
 										
 										<textarea  id="prescriptions" contenteditable="true"
 											class="form-control" name="prescription"  th:value="*{prescription}"
-											required="required" minlength="1" maxlength="500" maxwidth="200"
+											required="required" minlength="1" maxlength="10" maxwidth="10"
 											th:utext="*{prescription}"></textarea>
 
 									</div>
 									</div>
+
 
 									<div class="row">
 

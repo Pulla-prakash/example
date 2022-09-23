@@ -348,8 +348,8 @@ td {
 							th:action="@{/appointmentService}"
 							th:object="${contract}" id="contract">
 							
-							 <input type="hidden" id="id" name="id"
-								th:value=${contract.id}>
+							  <input type="hidden" id="conserviceId" name="conserviceId"
+								th:value=${contract.conserviceId}> 
 								
 								 <input type="hidden"
 								id="patientId" name="patientId" th:value=${patId}>
@@ -358,18 +358,21 @@ td {
  
 
 							<!-- booking form -->
+							
 							<div class="form-book">
 								<div class="select-date-part">
 									<!-- slider start -->
 
 									<!-- slider one -->
 									<div class="col-lg-6 col-md-6">
+														<span  style=color:blue;font-size:25px >select available Dates </span>
+									
 										<div class="slider-self">
-											<select class="form-control" id="date" name="date" 
+											<select class="form-control" id="date" name="date"  placeholder="Select Date"
 												th:onchange="selectedSlots(this.value)" th:value="this.value">
-												<option th:text="${date}"></option>
+												<option th:text="${selecteddate}"></option>
 												<option th:each="date,state:${date}" th:text="${date}"
-													th:value="${date}"></option>
+													th:value="${date}" ></option>
 
 											</select>
 										</div>

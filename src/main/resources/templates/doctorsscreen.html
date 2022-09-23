@@ -345,7 +345,7 @@ body {
 
 						<!-- second-col th:action="@{/addappointment/{pid}/{id}(pid=${pid},id=${id})-->
 						<form class="col-lg col-md"
-							th:action="@{/appointmentpayment}"
+							th:action="@{/appointment/appointmentpayment}"
 							th:object="${doc}" id="doc" novalidate>
 							<input type="hidden" id="doctorId" name="doctorId"
 								th:value=${doc.doctorId}> <input type="hidden"

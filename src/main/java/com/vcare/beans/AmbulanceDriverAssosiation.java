@@ -10,30 +10,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
+import javax.persistence.Table;
+/*
+Description:This class is a pojo class for Aboutus table.
+Author: Abhilash.
+*/
 @Entity
-
+@Table(name="ambulance_driver_assosiation")
 public class AmbulanceDriverAssosiation {
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	
 	private int ambdriversId;
 	private String  ambulancetype;
 	private String  driverId;
-	private char isactive;
+	private char isactive='Y';
 	private String createdBy;
 	private String updateBy;
 	private Date updated;
 	private LocalDate created;
 	private String status;
-	
-	
-	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="hospitalBranchId")
 	private HospitalBranch hospitalbranch;
-	
 	
 	public HospitalBranch getHospitalbranch() {
 		return hospitalbranch;
@@ -41,7 +39,6 @@ public class AmbulanceDriverAssosiation {
 	public void setHospitalbranch(HospitalBranch hospitalbranch) {
 		this.hospitalbranch = hospitalbranch;
 	}
-	
 	public int getAmbdriversId() {
 		return ambdriversId;
 	}
@@ -60,8 +57,6 @@ public class AmbulanceDriverAssosiation {
 	public void setDriverId(String driverId) {
 		this.driverId = driverId;
 	}
-
-	
 	public char getIsactive() {
 		return isactive;
 	}

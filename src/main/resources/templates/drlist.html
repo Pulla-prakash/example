@@ -40,43 +40,47 @@
 							<div class="Heading">
 								<h4>Dashboard</h4>
 							</div>
-							<div class="sidebar-item">
+									<div class="sidebar-item">
 								<img src="/images/Icons/app.png" alt=" icon" class="img-fluid" />
-								<a th:href="@{/bookAppointment/{id}(id=${session.pId})}">Appointments</a>
+								<a th:href="@{/appointment/bookAppointment/{id}(id=${session.pId})}">Appointments</a>
 							</div>
-
-
 							<div class="sidebar-item">
-								<img src="/images/Icons/pprofile.png" alt="icon" class="img-fluid" />
-								<a th:href="@{/patientprofile/{id}(id=${session.pId})}">Patient
+								<img src="/images/Icons/pprofile.png" alt="icon"
+									class="img-fluid" /> <a
+									th:href="@{/patient/patientprofile/{id}(id=${session.pId})}">Patient
 									Profile</a>
 							</div>
 							<div class="sidebar-item">
-								<img src="/images/Icons/pprofile.png" alt="icon" class="img-fluid" />
-								<a th:href="@{/med/medhistory/{id}(id=${session.pId})}">Medical
+								<img src="/images/Icons/pprofile.png" alt="icon"
+									class="img-fluid" /> <a
+									th:href="@{/med/medhistory/{id}(id=${session.pId})}">Medical
 									History</a>
 							</div>
-
 							<div class="sidebar-item">
-								<img src="/images/Icons/pprofile.png" alt="icon" class="img-fluid" />
-								<a th:href="@{/med/view/{id}(id=${session.pId})}">View Reports</a>
+								<img src="/images/Icons/pprofile.png" alt="icon"
+									class="img-fluid" /> <a
+									th:href="@{/med/view/{id}(id=${session.pId})}">View Reports</a>
 							</div>
-							
 							<div class="sidebar-item">
-                                <img src="../images/Icons/cal.png" alt="icon" class="img-fluid">
-                                <a th:href="@{/patientappointments/{pid}(pid=${session.pId})}">My Appointments</a>
-                            </div>
-
-						<div class="sidebar-item">
-								<img src="/images/Icons/pprofile.png" alt="icon" class="img-fluid" />
-								<a th:href="@{/list/{pid}(pid=${session.pId})}">View Prescription</a>
+								<img src="/images/Icons/cal.png" alt="icon" class="img-fluid">
+								<a th:href="@{/appointment/patientappointments/{pid}(pid=${session.pId})}">My
+									Appointments</a>
 							</div>
-							
 							<div class="sidebar-item">
-                                <img src="../images/Icons/cal.png" alt="icon" class="img-fluid">
-                                <a th:href="@{/Doctorlist/{pid}(pid=${session.pId})}">Doctors List</a>
-                            </div>
-
+								<img src="/images/Icons/pprofile.png" alt="icon"
+									class="img-fluid" /> <a
+									th:href="@{/Prescription/prescriptionlistbypatient/{patientId}(patientId=${session.pId})}">View
+									Prescription</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="/images/Icons/cal.png" alt="icon" class="img-fluid">
+								<a th:href="@{/Doctorlist/{pid}(pid=${session.pId})}">Doctors
+									List</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="/images/Icons/cal.png" alt="icon" class="img-fluid">
+								<a th:href="@{/labTest/disTest/{pid}(pid=${session.pId})}">Lab Test</a>
+							</div>
 						</div>
 					</section>
 					<!-- sidebar end -->

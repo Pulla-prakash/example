@@ -10,13 +10,10 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -54,9 +51,7 @@ public class Doctor {
 	private String profilepic;
 	@Lob
 	private String docQrcode;
-
-	@Column(name = "isActive", columnDefinition = " character(1) DEFAULT 'Y'::bpchar", nullable = true)
-	private Character isActive;
+	private Character isActive = 'Y';
 	private String createdBy;
 	private String updateBy;
 	@Column(columnDefinition = "date default now()")

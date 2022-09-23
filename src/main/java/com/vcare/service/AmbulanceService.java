@@ -8,16 +8,12 @@ import com.vcare.beans.Ambulance;
 import com.vcare.beans.Employees;
 
 public interface AmbulanceService {
-List<Ambulance> getAllAmbulance();
-	
+	List<Ambulance> getAllAmbulance();
 	Ambulance addAmbulance(Ambulance ambulance);
-
 	void UpdateAmbulance(Ambulance ambulance);
-	
-	void deleteAmbulancById(int ambulanceId );
-	
+	void deleteAmbulancById(int ambulanceId);
 	Ambulance getById(int ambulanceId);
-	
-	void saveAmbulance(MultipartFile file,Ambulance ambulance);
-	
+	void saveAmbulance(MultipartFile file, Ambulance ambulance);
+	List<Ambulance> hospitalAmbulanceDetails(int hbid);
+
 }

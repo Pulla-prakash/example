@@ -18,46 +18,32 @@ public class NewsImple implements NewsService {
 	public List<News> getAllNews() {
 		return newsrepository.findAll();
 	}
-
 	@Override
 	public void deleteNewsById(int NewsId) {
 		newsrepository.deleteById(NewsId);
 	}
-
 	@Override
 	public void saveNews(News news) {
 		newsrepository.save(news);
 	}
-
 	@Override
 	public News GetNewsById(int NewsId) {
 		return newsrepository.getById(NewsId);
 	}
-
 	@Override
 	public void updateNews(News news) {
 		newsrepository.save(news);
 	}
-
 	@Override
 	public News addSaveNews(News news) {
 		return newsrepository.save(news);
 	}
-
 	@Override
 	public List<News> getLatestNews() {
-// TODO Auto-generated method stub
 		return newsrepository.findPresentNews();
 	}
-
 	@Override
 	public void SaveMultimedia(MultipartFile file, News news) {
 		newsrepository.save(news);
 	}
 }
-/*
- * public List<News> getByKeyword(String keyword){ return
- * newsrepository.findByKeyword(keyword);
- *
- * }
- */

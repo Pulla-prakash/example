@@ -13,31 +13,22 @@ public class DoctorAvailabilityServiceImpl implements DoctorAvailabilityService 
 
 	@Override
 	public DoctorAvailability addDoctorAvailability(DoctorAvailability availability) {
-		// TODO Auto-generated method stub
 		return doctorAvailabilityRepository.save(availability);
 	}
-
 	@Override
 	public DoctorAvailability getDoctorAvailabilityId(int availabilityId) {
-		// TODO Auto-generated method stub
 		return doctorAvailabilityRepository.getById(availabilityId);
 	}
-
 	@Override
 	public void editEmployee(DoctorAvailability availability) {
-		// TODO Auto-generated method stub
 		doctorAvailabilityRepository.save(availability);
 	}
-
 	@Override
 	public void deleteEmployeeById(int availabilityId) {
-		// TODO Auto-generated method stub
 		doctorAvailabilityRepository.deleteById(availabilityId);
 	}
-
 	@Override
 	public List<DoctorAvailability> getAllDoctorAvailability() {
-		// TODO Auto-generated method stub
 		return doctorAvailabilityRepository.findAll();
 	}
 }

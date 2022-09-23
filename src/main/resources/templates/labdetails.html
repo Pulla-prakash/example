@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Vcare</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="author" content="#" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+<!-- MAIN CSS -->
+<link rel="stylesheet" th:href="@{/../dashboard/assets/css/final.css}" />
+
+<style>
+
+.boxes {
+width:100%;
+}
+.box1 {
+border-radius: 25px;
+padding: 20px;
+background:yellow;
+border:1px solid #73AD21;
+float:left;
+width: 180px;
+height: 250px;
+margin-right:10px;
+}
+.box2 {
+border-radius: 25px;
+border: 2px solid #73AD21;
+float:left;
+padding: 20px;
+width: 180px;
+height: 250px; 
+margin-right:10px;
+position: relative;
+}
+.box2 h5{
+text-decoration: blink;
+text-align: center;
+}
+.box2 a{
+position: absolute;
+   bottom: 0px;
+   border-radius: 10px;
+    background: #01c5a2;
+  color: #ffffff;
+  font-weight: 600;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left:45px; 
+  padding-right:45px; 
+   }
+</style>
+
+
+</head>
+
+<body>
+	<!-- header -->
+	<header class="header">
+		<div class="container-fluid">
+			<div class="header-box">
+				<h4>Vcare</h4>
+				<!-- <h5 th:text="'Hello Dr.'+${session.drname}"></h5> -->
+				<a href="@{/logout}">LogOut</a>
+			</div>
+		</div>
+	</header>
+	<!-- header -->
+	<main class="main">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xl-2 col-lg-3 col-md-4">
+					<!-- sidebar -->
+					<section class="sidebar">
+						<div class="sidebar-wrap">
+							<div class="Heading">
+								<h4>Dashboard</h4>
+							</div>
+							<div class="sidebar-item">
+								<img src="/images/Icons/app.png" alt=" icon" class="img-fluid" />
+								<a th:href="@{/bookAppointment/{id}(id=${session.pId})}">Appointments</a>
+							</div>
+
+
+							<div class="sidebar-item">
+								<img src="/images/Icons/pprofile.png" alt="icon" class="img-fluid" />
+								<a th:href="@{/patientprofile/{id}(id=${session.pId})}">Patient
+									Profile</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="/images/Icons/pprofile.png" alt="icon" class="img-fluid" />
+								<a th:href="@{/med/medhistory/{id}(id=${session.pId})}">Medical
+									History</a>
+							</div>
+
+							<div class="sidebar-item">
+								<img src="/images/Icons/pprofile.png" alt="icon" class="img-fluid" />
+								<a th:href="@{/med/view/{id}(id=${session.pId})}">View Reports</a>
+							</div>
+
+							<div class="sidebar-item">
+								<img src="/images/Icons/pprofile.png" alt="icon" class="img-fluid" />
+								<a th:href="@{/list/{pid}(pid=${session.pId})}">View Prescription</a>
+							</div>
+							
+							<div class="sidebar-item">
+                                <img src="../images/Icons/cal.png" alt="icon" class="img-fluid">
+                                <a th:href="@{/patientappointments/{pid}(pid=${session.pId})}">My Appointments</a>
+                            </div>
+                            
+                            <div class="sidebar-item">
+                                <img src="../images/Icons/cal.png" alt="icon" class="img-fluid">
+                                <a th:href="@{/Doctorlist/{pid}(pid=${session.pId})}">Doctors List</a>
+                            </div>
+							
+						</div>
+					</section>
+					<!-- sidebar end -->
+				</div>
+				<!-- main area -->
+				<div class="col-lg-10 col-md-10">
+					<div class="main-area">
+						<!-- page Heading -->
+
+						 <div class="page-heading">
+							<center><h1> Diagnostic Centers</h1></center>
+							<h5 style=color:red th:text="${nodata}"></h5>							
+					</div>
+
+			<!-- page Heading End -->
+
+			<!-- all appointments -->
+			<form>
+		<h3>Selected Tests   <b style=font-size:30px th:each="test:${uniqeLabTest}" th:text=" ${test.testName}+'*  '"></b></h3>
+		<div class="boxes">
+<!-- <div class="box2" th:each="test:${labtestlist}">
+<p th:text="${test.testName}"></p>
+<p th:text="${test.price}"></p>
+<p th:text="${test.about}"></p>
+<p th:text="${test.laboratory.labName}"></p>
+<p th:text="${test.laboratory.address}"></p>-->
+<div class="box2" th:each="test:${uniqeLabApp}">
+<h5 class=heading th:text="${test.labName}"></h5>
+<b>address:</b>
+<p th:text="${test.address}"></p>
+ <a th:href="@{/labpay/{pId}/{labId}/{testids}(pId=${session.pId},labId=${test.labId},testids=${testids})}">Book</a> 
+</div>
+
+
+		
+			<!-- all appointments end -->
+		</div>
+		</div></div></div>
+	</main>
+
+	<!-- SCRIPTS -->
+	<script src="../js/jquery.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/jquery.sticky.js"></script>
+	<script src="../js/jquery.stellar.min.js"></script>
+	<script src="../js/wow.min.js"></script>
+	<script src="../js/smoothscroll.js"></script>
+	<script src="../js/owl.carousel.min.js"></script>
+</body>
+</html>
+
+
+

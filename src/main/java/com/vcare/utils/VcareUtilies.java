@@ -5,7 +5,6 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -24,13 +23,10 @@ public class VcareUtilies {
 		byte[] keyArray = new byte[24];
 		byte[] temporaryKey;
 		byte[] toEncryptArray = null;
-
 		try {
-
 			toEncryptArray = passwordToHash.getBytes("UTF-8");
 			MessageDigest m = MessageDigest.getInstance("MD5");
 			temporaryKey = m.digest(saltKey.getBytes("UTF-8"));
-
 			if (temporaryKey.length < 24) // DESede require 24 byte length key
 			{
 				int index = 0;
@@ -38,31 +34,25 @@ public class VcareUtilies {
 					keyArray[i] = temporaryKey[index];
 				}
 			}
-
 			Cipher c = Cipher.getInstance("DESede/CBC/PKCS5Padding");
 			c.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(keyArray, "DESede"), new IvParameterSpec(sharedvector));
 			byte[] encrypted = c.doFinal(toEncryptArray);
 			EncPassword = Base64.encodeBase64String(encrypted);
-
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException | NoSuchPaddingException | InvalidKeyException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException NoEx) {
 			JOptionPane.showMessageDialog(null, NoEx);
 		}
-
 		return EncPassword;
 	}
 
 	public static String getDecryptSecurePassword(String EncPassword, String saltKey) {
-
 		String DecPassword = "";
 		byte[] keyArray = new byte[24];
 		byte[] temporaryKey;
 		byte[] toEncryptArray = null;
-
 		try {
 			MessageDigest m = MessageDigest.getInstance("MD5");
 			temporaryKey = m.digest(saltKey.getBytes("UTF-8"));
-
 			if (temporaryKey.length < 24) // DESede require 24 byte length key
 			{
 				int index = 0;
@@ -70,19 +60,14 @@ public class VcareUtilies {
 					keyArray[i] = temporaryKey[index];
 				}
 			}
-
 			Cipher c = Cipher.getInstance("DESede/CBC/PKCS5Padding");
 			c.init(Cipher.DECRYPT_MODE, new SecretKeySpec(keyArray, "DESede"), new IvParameterSpec(sharedvector));
 			byte[] decrypted = c.doFinal(Base64.decodeBase64(EncPassword));
-
 			DecPassword = new String(decrypted, "UTF-8");
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException | NoSuchPaddingException | InvalidKeyException
 				| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException NoEx) {
 			JOptionPane.showMessageDialog(null, NoEx);
 		}
-
 		return DecPassword;
-
 	}
-
 }

@@ -24,7 +24,7 @@
 		<div class="container-fluid">
 			<div class="header-box">
 				<h4>Vcare</h4>
-				<a href="/">LogOut</a>
+				<a th:href="@{/logoutDoc}">LogOut</a>
 			</div>
 	</header>
 	<!-- header end -->
@@ -38,27 +38,25 @@
 							<div class="Heading">
 								<h4>Dashboard</h4>
 							</div>
-							<div class="sidebar-item">
-								<img src="../images/Icons/app.png" alt=" icon" class="img-fluid" />
-								<a th:href="@{/appointmentlist/{did}(did=${session.DocId})}">Appointments</a>
-							</div>
-							
-							<div class="sidebar-item">
-								<img src="../images/Icons/cal.png" alt="icon" class="img-fluid" />
-								<a th:href="@{/availabilityList/{id}(id=${session.DocId})}">Availability</a>
+								<div class="sidebar-item">
+								<img src="/images/Icons/app.png" alt=" icon" class="img-fluid" />
+								<a th:href="@{/appointment/appointmentlist/{did}(did=${session.DocId})}">Appointments</a>
 							</div>
 							<div class="sidebar-item">
-								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid" />
-								<a th:href="@{/updatedDoctorProfile/{did}(did=${session.DocId})}">Doctor Profile</a>
+								<img src="/images/Icons/cal.png" alt="icon" class="img-fluid" />
+								<a th:href="@{/DoctorAvailability/availabilityList/{doctorId}(doctorId=${session.DocId})}">Availability</a>
 							</div>
 							<div class="sidebar-item">
-								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
-								<a th:href="@{/prescriptionlist/{did}(did=${session.DocId})}">Patients Prescription</a>
+								<img src="/images/Icons/profile.png" alt="icon" class="img-fluid" />
+								<a th:href="@{/doctor/updatedDoctorProfile/{did}(did=${session.DocId})}">Doctor Profile</a>
 							</div>
-							
 							<div class="sidebar-item">
-								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
-								<a th:href="@{/payment/{docId}(docId=${session.DocId})}">Payments</a>
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/Prescription/prescriptionlist/{doctorId}(doctorId=${session.DocId})}">Patients Prescription</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/doctor/payment/{docId}(docId=${session.DocId})}">Payments</a>
 							</div>
 						</div>
 					</section>
@@ -69,16 +67,11 @@
 					<div class="main-area">
 						<!-- page Heading -->
 						<div class="row">
-							<!-- <form class="col-md-3" th:action="@{/hospital/search}" method="get">
-<input type="text" name="hospitalName" th:value="${hospitalName}" placeholder="Find by Hospital Name " size="20" >
-<button type="submit"><i class="fa fa-search">Search</i></button>
-</form>
--->
 						</div>
 						<div class="page-heading">
 							<div class="header-box">
 								<h1>Availability Details</h1>
-								<a th:href="@{/addAvailability/{did}(did=${id})}" class="img-fluid">Add availability</a>
+								<a th:href="@{/DoctorAvailability/addAvailability/{doctorId}(doctorId=${doctorid})}" class="img-fluid">Add availability</a>
 							</div>
 							&ensp;&ensp;&ensp;<span style="color:#006400;font-size:30px" th:text="${session.docAvailExists}"></span>
 						</div>
@@ -104,7 +97,7 @@
 											<td th:text="${availabilityObj.endTimings}"></td>
 											<td class="select">
 												<ul class="pm">
-													<li><a href="#" title="#" th:href="@{/editAvailability/{id}(id=${availabilityObj.availabilityId})}">Edit</a>
+													<li><a href="#" title="#" th:href="@{/DoctorAvailability/editAvailability/{availabilityId}(availabilityId=${availabilityObj.availabilityId})}">Edit</a>
 														
 												</ul>
 											</td>

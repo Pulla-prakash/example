@@ -36,14 +36,61 @@
 			<div class="row">
 				<div class="col-xl-2 col-lg-3 col-md-4">
 					<!-- sidebar -->
-					<section class="sidebar">
+			<section class="sidebar">
 						<div class="sidebar-wrap">
 							<div class="Heading">
 								<h4>Dashboard</h4>
 							</div>
-
+							<div class="sidebar-item">
+								<img src="../images/Icons/app.png" alt=" icon" class="img-fluid">
+								<a href="/hospital/hospitalList">Hospital</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/cal.png" alt="icon" class="img-fluid">
+								<a th:href="@{/Drlist}">Doctor</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/patientsList}">Patient</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/Appointment}">Appointments</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/pprofile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/news/newstable}">News</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/pprofile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/network}">Social Network</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/payments}">Payments</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/addabout}">About Us</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/offeerlist}">Offer services</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/laboratoryList}">Laboratory</a>
+							</div>
 
 						</div>
+
 					</section>
 					<!-- sidebar end -->
 				</div>
@@ -52,8 +99,9 @@
 					<div class="main-area">
 						<!-- page Heading -->
 						<div class="page-heading">
+						<div class="header-box">
 							<h1>Contract Employee Details</h1>
-							<a th:href="@{/addcontractEmployee/{id}(id=${session.sessionId})}">Add ContractEmployee</a>
+							<a th:href="@{/ContractEmployee/addcontractEmployee/{contractserviceId}(contractserviceId=${session.sessionId})}">Add ContractEmployee</a>
 						</div>
 						<h5 style=color:darkgreen th:text="${adminmsg}"></h5>
 						<div>
@@ -61,7 +109,6 @@
 							<table id="example">
 								<thead>
 									<tr>
-
 										<th>Name</th>
 										<th>MobileNo</th>
 										<th>Age</th>
@@ -69,14 +116,11 @@
 										<th>Gender</th>
 										<th>Experience</th>
 										<th>Qualification</th>
-										<th>Service</th>
 										<th>Action</th>
 									</tr>
 								</thead>
 								<tbody>
-
 									<tr th:each="contractempObj : ${contractemplist}">
-
 										<td th:text="${contractempObj .name}"></td>
 										<td th:text="${contractempObj .mobileNo}"></td>
 										<td th:text="${contractempObj .  age}"></td>
@@ -84,33 +128,20 @@
 											<td th:text="${contractempObj .gender}"></td>
 											<td th:text="${contractempObj .experience}"></td>
 										<td th:text="${contractempObj . qualification}"></td>
-										<td th:text="${contractempObj . Services}"></td>
 										
 										<td><select name="table"
 											onchange="location = this.value;">
-
 												<option>Action</option>
 												<option
-													th:value="@{/editcontractemp/{id}(id=${contractempObj.id})}">edit
+													th:value="@{/ContractEmployee/editcontractemp/{contractemployeeId}(contractemployeeId=${contractempObj.id})}">edit
 												</option>
 												<option
-													th:value="@{/deletecontractemp/{id}(id=${contractempObj.id})}">
+													th:value="@{/ContractEmployee/deletecontractemp/{contractemployeeId}(contractemployeeId=${contractempObj.id})}">
 													Delete</option>
-												<!-- <option th:value="@{/empid/{id}(id=${empObj.employeeId})}">Generate
-													IDcard</option> -->
-
-
-
 										</select></td>
- 
-
 									</tr>
 								</tbody>
-
-
-
 							</table>
-
 						</div>
 						<!-- all appointments end -->
 					</div>
@@ -122,13 +153,6 @@
 	<!-- SCRIPTS -->
 	<script src="../js/jquery.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
-	<!-- <script src="../js/jquery.sticky.js"></script>
-    <script src="../js/jquery.stellar.min.js"></script>
-    <script src="../js/wow.min.js"></script>
-    <script src="../js/smoothscroll.js"></script>
-    <script src="../js/owl.carousel.min.js"></script>
-    <script src="./assets/js/script.js"></script> -->
-
 	<script type="text/javascript" charset="utf8"
 		src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
 	<script type="text/javascript" charset="utf8"
@@ -138,10 +162,5 @@
 			$("#example").dataTable();
 		})
 	</script>
-
-
-
-
 </body>
-
 </html>

@@ -26,6 +26,7 @@ import com.vcare.service.AdminService;
 import com.vcare.service.InsuranceService;
 
 @Controller
+@RequestMapping("/Insurance")
 public class InsuranceController<ModelAndView> {
 
 	@Autowired
@@ -35,11 +36,10 @@ public class InsuranceController<ModelAndView> {
 	
 	static Logger log=Logger.getLogger(InsuranceController.class.getClass());
 
-	@RequestMapping(value = "addInsurance/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "addInsurance/{adminid}", method = RequestMethod.GET)
 	public String newInsurance(Model model, @ModelAttribute(value = "insurance") Insurance insurance,
-			@PathVariable int id) {
-
-		Admin adminobj = adminService.getadminById(id);
+			@PathVariable("adminid") int adminid) {
+		Admin adminobj = adminService.getadminById(adminid);
 		int a = adminobj.getAdminId();
 		String name = adminobj.getName();
 		model.addAttribute("admin", a);
@@ -48,19 +48,13 @@ public class InsuranceController<ModelAndView> {
 		model.addAttribute("insurance", insurance);
 		return "insuranceform";
 	}
-
-	@PostMapping("/saveIns/{id}")
-	public String saveProduct(Model model, @RequestParam("file") MultipartFile file,
-
-			Insurance insurance, @PathVariable int id,HttpServletRequest request) throws IOException {
-
-		Admin adminobj = adminService.getadminById(id);
+	@PostMapping("/saveInsurance/{adminid}")
+	public String saveInsurance(Model model, @RequestParam("file") MultipartFile file,
+			Insurance insurance, @PathVariable("adminid")int adminid,HttpServletRequest request) throws IOException {
+		Admin adminobj = adminService.getadminById(adminid);
 		model.addAttribute("admin", adminobj);
 		insurance.setCreatedBy(adminobj.getAdminId());
-		// insuranceService.addInsurance(insurance);
-		insurance.setIsactive('Y');
 		insurance.setInsurencepic(Base64.getEncoder().encodeToString(file.getBytes()));
-//			  insuranceService.saveProduct(file, insuranceName, insuranceDescription,createdBy,updateBy);
 		log.info(insurance.getInsuranceName());
 		HttpSession session=request.getSession();
 		if(insurance.getInsuranceId()!=0) {
@@ -71,14 +65,13 @@ public class InsuranceController<ModelAndView> {
 			session.setAttribute("InName", insurance.getInsuranceName());
 		}
 		insuranceService.saveInsurance(insurance);
-		return "redirect:/insurancelist/{id}";
+		return "redirect:/Insurance/insurancelist/{adminid}";
 	}
-
-	@RequestMapping("/insurancelist/{id}")
-	public String insuranceList(Model model, Insurance insurance, @PathVariable int id,HttpServletRequest request) {
-		Admin adminobj = adminService.getadminById(id);
+	@RequestMapping("/insurancelist/{adminid}")
+	public String insuranceList(Model model, Insurance insurance, @PathVariable("adminid") int adminid,HttpServletRequest request) {
+		Admin adminobj = adminService.getadminById(adminid);
 		model.addAttribute("admin", adminobj);
-		List<Insurance> list = insuranceService.getAllInsurance();
+		List<Insurance> list = insuranceService.getAllActiveInsurance();
 		model.addAttribute("insurancelist", list);
 		HttpSession session=request.getSession();
 		if(session.getAttribute("adminList")=="List") {
@@ -86,57 +79,49 @@ public class InsuranceController<ModelAndView> {
 			session.setAttribute("adminList", "");
 			session.setAttribute("InName", "");
 		}
-		
 		if(session.getAttribute("inmsg")=="inmsg") {
 			model.addAttribute("adminmsg",session.getAttribute("name")+"updated");
 			session.setAttribute("name", "");
 			session.setAttribute("inmsg", "");
 		}
-		
 		if(session.getAttribute("indelete")=="indelete") {
 			model.addAttribute("adminmsg", "Successfully deleted");
 			session.setAttribute("indelete", "");
 		}
-		
 		return "insurancelist";
 	}
 
-	@RequestMapping("deleteInsurance/{id}/{delid}")
-	public String deleteinsurance(Model model, @PathVariable int delid, @PathVariable int id, Insurance insurance,HttpServletRequest request) {
-		Admin adminobj = adminService.getadminById(id);
+	@RequestMapping("deleteInsurance/{adminid}/{insuranceid}")
+	public String deleteInsurance(Model model, @PathVariable int insuranceid, @PathVariable int adminid, Insurance insurance,HttpServletRequest request) {
+		Admin adminobj = adminService.getadminById(adminid);
 		model.addAttribute("admin", adminobj);
-		insuranceService.deleteInsuranceById(delid);
-		List<Insurance> list = insuranceService.getAllInsurance();
-		model.addAttribute("insurancelist", list);
+		insuranceService.deleteInsuranceById(insuranceid);
 		HttpSession session =request.getSession();
 		session.setAttribute("indelete", "indelete");
-		return "redirect:/insurancelist/{id}";
+		return "redirect:/Insurance/insurancelist/{adminid}";
 	}
 
-	// Fetch single emp
-	@GetMapping("/editIns/{id}/{insid}")
-	public String getinsuranceById(Model model, @PathVariable("id") int Id, @PathVariable("insid") int insid) {
-		Insurance insurance = insuranceService.getInsuranceById(insid);
+	@GetMapping("/editInsurance/{adminid}/{insuranceid}")
+	public String editInsuranceById(Model model, @PathVariable("adminid") int adminId, @PathVariable("insuranceid") int insuranceid) {
+		Insurance insurance = insuranceService.getInsuranceById(insuranceid);
 		model.addAttribute("insurance", insurance);
-		model.addAttribute("insuranceId", Id);
-		Admin adminobj = adminService.getadminById(Id);
+		model.addAttribute("insuranceId", insuranceid);
+		Admin adminobj = adminService.getadminById(adminId);
 		model.addAttribute("admin", adminobj);
 		int a = adminobj.getAdminId();
 		String name = adminobj.getName();
-		// insuranceService.saveProduct(file, insurance);
 		model.addAttribute("admin", a);
 		model.addAttribute("adminname", name);
 		log.info("inside getinsuranceById id is:::" + insurance.getInsuranceId());
 		return "insuranceform";
 	}
-	@GetMapping("/insurance/{id}")
-	public String viewinsurance(Model model, @PathVariable("id") int Id) {
-		Insurance insurance = insuranceService.getInsuranceById(Id);
+	@GetMapping("/insurance/{insuranceid}")
+	public String viewinsuranceById(Model model, @PathVariable("insuranceid") int insuranceid) {
+		Insurance insurance = insuranceService.getInsuranceById(insuranceid);
 		model.addAttribute("insurancename", insurance.getInsuranceName());
 		model.addAttribute("description", insurance.getInsuranceDescription());
 		model.addAttribute("image", insurance.getInsurencepic());
 		model.addAttribute("termscondition", insurance.getTermsconditions());
-
 		return "insurancescreens";
 	}
 }

@@ -48,34 +48,55 @@
 								<img src="/images/Icons/app.png" alt=" icon" class="img-fluid">
 								<a href="/hospital/hospitalList">Hospital</a>
 							</div>
-							<!-- <div class="sidebar-item">
-								<img src="/images/Icons/pa.png" alt="icon" class="img-fluid">
-								<a th:href="@{/Dephome}">Department</a>
-							</div> -->
+							
 							<div class="sidebar-item">
 								<img src="/images/Icons/cal.png" alt="icon" class="img-fluid">
 								<a th:href="@{/Drlist}">Doctor</a>
 							</div>
 							<div class="sidebar-item">
-								<img src="/images/Icons/profile.png" alt="icon"
-									class="img-fluid"> <a th:href="@{/patientsList}">Patient</a>
+								<img src="/images/Icons/profile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/patient/patientsList}">Patient</a>
 							</div>
-
-							<!-- <div class="sidebar-item">
-								<img src="../images/Icons/pprofile.png" alt="icon" class="img-fluid">
-								<a th:href="@{/insurancelist}" >Insurances</a>
-							</div> -->
 							<div class="sidebar-item">
-								<img src="/images/Icons/pprofile.png" alt="icon"
-									class="img-fluid"> <a th:href="@{/news/newstable}">News</a>
+								<img src="/images/Icons/profile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/Appointment}">Appointments</a>
 							</div>
-
+							
 							<div class="sidebar-item">
-								<img src="/images/Icons/pprofile.png" alt="icon"
-									class="img-fluid"> <a th:href="@{/network}">Social
-									Network</a>
+								<img src="/images/Icons/profile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/Insurance/insurancelist/{adminid}(adminid=${session.AdminId})}">Insurance</a>
 							</div>
 
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/pprofile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/news/newstable}">News</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/pprofile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/SocialNetwork/networkList}">Social Network</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/payments}">Payments</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/Aboutus/addabout}">About Us</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/popularoffer/offerlist}">Offer services</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/laboratory/laboratoryList}">Laboratory</a>
+							</div>
 						</div>
 					</section>
 					<!-- sidebar end -->
@@ -121,7 +142,7 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-5">
+										<div class="col-md-10">
 											<label for="sep"> Description</label>
 											<textarea class="form-control" id="NewsDescription"
 												name="NewsDescription" th:value="*{NewsDescription}" th:text="*{NewsDescription}" 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.vcare.beans.Doctor;
 import com.vcare.beans.HospitalBranch;
+import com.vcare.beans.LabTest;
 import com.vcare.beans.Patients;
 
 @Repository
@@ -27,4 +28,7 @@ public interface PatientsRepository extends JpaRepository<Patients, Integer> {
 
 	@Query("select al from Patients al WHERE lower(al.patientMailId)=lower(?1) and lower(al.firstName)=lower(?2) and al.patientMobile=?3")
 	public List<Patients> findPatientforAppointment(String patientMailId,String firstName,long Mobile);
+	
+	@Query(value="select * from Patients where is_active ='y' or is_active ='Y'",nativeQuery=true)
+	List<Patients> getAllActivePatients();
 }

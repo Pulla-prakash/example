@@ -17,15 +17,10 @@
 		body {
 			background-image: url("/images/Doctor.png");
 			background-size: cover;
-
-
 		}
 	</style>
 </head>
-</head>
-
 <body>
-
 	<!-- header -->
 	<header class="header">
 		<div class="container-fluid">
@@ -51,28 +46,25 @@
 							</div>
 							<div class="sidebar-item">
 								<img src="../images/Icons/app.png" alt=" icon" class="img-fluid" />
-								<a th:href="@{/appointmentlist/{did}(did=${session.DocId})}">Appointments</a>
+								<a th:href="@{/appointment/appointmentlist/{did}(did=${session.DocId})}">Appointments</a>
 							</div>
-							
 							<div class="sidebar-item">
 								<img src="../images/Icons/cal.png" alt="icon" class="img-fluid" />
-								<a th:href="@{/availabilityList/{id}(id=${session.DocId})}">Availability</a>
+								<a th:href="@{/DoctorAvailability/availabilityList/{doctorId}(doctorId=${session.DocId})}">Availability</a>
 							</div>
 							<div class="sidebar-item">
 								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid" />
-								<a th:href="@{/updatedDoctorProfile/{did}(did=${session.DocId})}">Doctor Profile</a>
+								<a th:href="@{/doctor/updatedDoctorProfile/{did}(did=${session.DocId})}">Doctor Profile</a>
 							</div>
 							<div class="sidebar-item">
 								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
-								<a th:href="@{/prescriptionlist/{did}(did=${session.DocId})}">Patients Prescription</a>
+								<a th:href="@{/Prescription/prescriptionlist/{doctorId}(doctorId=${session.DocId})}">Patients Prescription</a>
 							</div>
-							
 							<div class="sidebar-item">
 								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
-								<a th:href="@{/payment/{docId}(docId=${session.DocId})}">Payments</a>
+								<a th:href="@{/doctor/payment/{docId}(docId=${session.DocId})}">Payments</a>
 							</div>
 						</div>
 					</section>
 </body>
-
 </html>

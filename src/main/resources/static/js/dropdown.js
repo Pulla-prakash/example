@@ -13,14 +13,14 @@ function selectBranch(serviceName){
 }
 
 function selectedService(serviceName){
-	var appname=window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/selectedService'));
-	document.getElementById('appointment').action=appname+"/selectedService?getQry=selectedService&serviceName="+serviceName;
+	var appname=window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/appointment/selectedService'));
+	document.getElementById('appointment').action=appname+"/appointment/selectedService?getQry=selectedService&serviceName="+serviceName;
 	document.getElementById('appointment').submit();
 }
 
 function selectedBranches(branchId){
-	var appname=window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/selectedBranches'));
-	document.getElementById('appointment').action=appname+"/selectedBranches?getQry=selectedService&branchId="+branchId;
+	var appname=window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/appointment/selectedBranches'));
+	document.getElementById('appointment').action=appname+"/appointment/selectedBranches?getQry=selectedService&branchId="+branchId;
 	document.getElementById('appointment').submit();
 }  
 function selectedBranchAdmin(branchId){
@@ -31,10 +31,10 @@ function selectedBranchAdmin(branchId){
 }  
 
 function selectedDoctors(doctorId){
-	var appname=window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/selectedDoctors'));
+	var appname=window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/appointment/selectedDoctors'));
 	var hospitalBranchId=document.getElementById('BranchId').value;
 	/*var patientId=document.getElementById('patient').value;*/
-	document.getElementById('appointment').action=appname+"/selectedDoctors?getQry=selectedDoctors&hospitalBranchId="+hospitalBranchId+"&doctorId="+doctorId;
+	document.getElementById('appointment').action=appname+"/appointment/selectedDoctors?getQry=selectedDoctors&hospitalBranchId="+hospitalBranchId+"&doctorId="+doctorId;
 	document.getElementById('appointment').submit();
 }
 function DropDoctors(doctorId){
@@ -70,7 +70,7 @@ function selectedDate(date){
 }
 function selectedSlots(date){
 	var appname=window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/ihgufyd'));
-	var contractempid=document.getElementById('id').value;
+	var contractempid=document.getElementById('conserviceId').value;
 	var pid=document.getElementById('patientId').value;
 	document.getElementById('contract').action=appname+"/ViewSlots?getQryDate=selectDate&Date="+date;
 	document.getElementById('contract').submit();

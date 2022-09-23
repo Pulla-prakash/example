@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,37 +32,33 @@ public class NewsController {
 	NewsService newsservice;
    @Autowired
    HospitalService hospitalService;
+   
+   static Logger log=Logger.getLogger(NewsController.class.getClass());
+   
 	@GetMapping("/viewAllNews")
 	public String viewHomePages(Model model) {
 		List<Hospital> hospList = hospitalService.getAllHospitals();
 		model.addAttribute("hospitalsList", hospList);
 		List<News> newslist = newsservice.getAllNews();
-		
 		model.addAttribute("newslist", newslist);
 		return "indexnews";
 	}
-
-	
-	@GetMapping("/newsdetails/{id}")
-	public String displayNews(Model model, @PathVariable("id") int NewsId) {
+	@GetMapping("/newsdetails/{newsId}")
+	public String displayNews(Model model, @PathVariable("newsId") int NewsId) {
 		News obj = newsservice.GetNewsById(NewsId);
 		model.addAttribute("newspage", obj);
 		List<News> newslists = newsservice.getLatestNews();
 		model.addAttribute("newsLists", newslists);
 		try {
 		List<News> newslist = newslists.subList(0, 2);
-		System.out.println("fdgyuhjkvgchfyuikjhgfyuil"+newslist);
+		log.debug("fdgyuhjkvgchfyuikjhgfyuil"+newslist);
 		model.addAttribute("newsList", newslist);
 		}catch(IndexOutOfBoundsException e) {
-		System.out.println("vgqedvgdhvedhvEYUDGHebdhjB4534567456");
+		log.debug("vgqedvgdhvedhvEYUDGHebdhjB4534567456");
 		model.addAttribute("newsList", null);
 		}
-
-
 		return "newspage";
-		
 	}
-
 	@GetMapping("/newstable")
 	public String viewalldepartment(Model model,HttpServletRequest request) {
 		model.addAttribute("newslist", newsservice.getAllNews());
@@ -76,37 +73,31 @@ public class NewsController {
 			session.setAttribute("newsname", "");
 			session.setAttribute("Newmsg", "");
 		}
-		
 		if(session.getAttribute("newsdelete")=="newsdelete") {
 			model.addAttribute("adminmsg", "\tSucccessfully deleted");
 			session.setAttribute("newsdelete", "");
 		}
 		return "Newslist";
 	}
-
 	@GetMapping("/deletenews/{NewsId}")
 	public String deleteNews(Model model, @PathVariable(value = "NewsId") int NewsId,HttpServletRequest request) {
-		System.out.println("Hi delete");
+		log.debug("Hi delete");
 		newsservice.deleteNewsById(NewsId);
-		System.out.println("delete operation is invoked");
+		log.debug("delete operation is invoked");
 		model.addAttribute("newslist", newsservice.getAllNews());
 		HttpSession session=request.getSession();
 		session.setAttribute("newsdelete", "newsdelete");
 		return "redirect:/news/newstable";
 	}
-
 	@GetMapping("/addnews")
 	public String showNewNewsForm(Model model) {
 		News news = new News();
 		model.addAttribute("objnews", news);
 		return "AddNews";
 	}
-
-	
 	@RequestMapping(value = "/savenews", method = RequestMethod.POST)
 	public String addNews(Model model,@RequestParam("file") MultipartFile file ,@RequestParam("file1") MultipartFile file1 ,News newsObj,HttpServletRequest request) throws IOException {
 	newsObj.setCreated(LocalDate.now());
-	
 	if(file.getOriginalFilename()=="") {
 		newsObj.setNewsImage(newsObj.getNewsImage());
 	}else {
@@ -118,7 +109,6 @@ public class NewsController {
 	List<News> newslist = newsservice.getAllNews();
 	model.addAttribute("newslist", newslist);
     HttpSession session=request.getSession();
-    
     model.addAttribute("Nname", newsObj.getContentName());
     if(newsObj.getNewsId()!=0) {
     	session.setAttribute("Newsmsg", "Newsmsg");
@@ -128,7 +118,6 @@ public class NewsController {
     }
 	return "redirect:/news/newstable";
 	}
-
 	@GetMapping("/editnews/{NewsId}")
 	public String editNews(Model model, @PathVariable(value = "NewsId") int NewsId) {
 		News NewsObj = newsservice.GetNewsById(NewsId);
@@ -136,5 +125,4 @@ public class NewsController {
 		model.addAttribute("NewsId", NewsId);
 		return "AddNews";
 	}
-
 }

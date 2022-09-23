@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.vcare.beans.Patients;
 import com.vcare.beans.Services;
 
 @Repository
@@ -23,4 +24,6 @@ public interface ServiceRepository extends JpaRepository<Services, Integer> {
 	@Query("select serviceName from Services al where al.hospitalbranch.hospitalBranchId=?1")
 	List <String> BranchServices(int branchId);
 
+	@Query(value="select * from Services where is_active ='y' or is_active ='Y'",nativeQuery=true)
+	List<Services> getAllActiveServices();
 }

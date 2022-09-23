@@ -18,25 +18,25 @@ public class DoctorRatingServiceImp implements DoctorRatingService {
 	public List<Rating> GetAllDoctorRating() {
 		return doctorRatingRepository.findAll();
 	}
-
 	@Override
 	public Rating getDoctorRatingById(long id) {
 		return doctorRatingRepository.getById(id);
 	}
-
 	@Override
 	public Rating addDoctorRating(Rating doctorRating) {
 		return doctorRatingRepository.save(doctorRating);
 	}
-
 	@Override
 	public void updateDoctorRating(Rating doctorRating) {
 		doctorRatingRepository.save(doctorRating);
 	}
-
 	@Override
 	public void deleteDoctorRatingById(long id) {
 		doctorRatingRepository.deleteById(id);
+	}
+	@Override
+	public List<Rating> getRatingByDoctorId(int doctorId) {
+		return doctorRatingRepository.getRatingByDoctorId(doctorId);
 	}
 
 }

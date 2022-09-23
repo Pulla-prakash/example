@@ -44,15 +44,50 @@
 							<div class="Heading">
 								<h4>Dashboard</h4>
 							</div>
-							<div class="sidebar-item">
-								<img src="../images/Icons/app.png" alt=" icon" class="img-fluid" />
-								<a href="./index.html">Appointments</a>
+							   <div class="sidebar-item">
+								<img src="../images/Icons/app.png" alt=" icon" class="img-fluid">
+								<a href="/hospital/hospitalList">Hospital</a>
 							</div>
 							<div class="sidebar-item">
-								<img src="../images/Icons/pa.png" alt="icon" class="img-fluid" />
-								<a href="./patients.html">Patients</a>
+								<img src="../images/Icons/cal.png" alt="icon" class="img-fluid">
+								<a th:href="@{/Drlist}">Doctor</a>
 							</div>
-							
+							<div class="sidebar-item">
+								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/patient/patientsList}">Patient</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/Appointment}">Appointments</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/Insurance/insurancelist/{adminid}(adminid=${session.AdminId})}">Insurance</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="../images/Icons/pprofile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/news/newstable}">News</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="../images/Icons/pprofile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/SocialNetwork/networkList}">Social Network</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/payments}">Payments</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/Aboutus/addabout}">About Us</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/popularoffer/offerlist}">Offer services</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/laboratory/laboratoryList}">Laboratory</a>
+							</div>
 						</div>
 					</section>
 					<!-- sidebar end -->
@@ -64,15 +99,13 @@
 						<div class="page-heading">
 							
 								  <div class="header-box">
-									<h1>Detail List</h1>
+									<h1>Offers list </h1>
 									
-									 <a th:href="@{/addpopularoffer}" class="img-fluid"  >Add popularoffer</a>
+									 <a th:href="@{/popularoffer/addpopularoffer}" class="img-fluid"  >Add popularoffer</a>
 								  </div>
 						</div>
 						<!-- page Heading End -->
-
 						<!-- abailablility -->
-
 						<div class="avaliability-box">
 							<div class="form-box">
 								<table id="list">
@@ -83,7 +116,6 @@
 											<th style="width:10%;">Action</th>
 										</tr>
 									</thead>
-
 									<tbody>
 										<tr th:each="offerObj:${offerlist}">
 											<td th:text="${offerObj.name}"></td>
@@ -93,45 +125,31 @@
 											style="width: 100px; height: 100px;"></th>
 										<td>	
 										 <ul class="pm">
-											<li><a href="#" title="#">Select</a>
+											<li><a title="#">Select</a>
 												<ul class="cm">
-													<li><a th:href="@{/addcontractEmployee/{id}(id=${offerObj.id})}"
-                                                            title="#">Add contractEmployee</a></li>
-													<!-- <li><a
-															th:href="@{/deleteAbout/{id}(id=${aboutObj.id})}">Delete</a>
-													</li> -->
-													
+													<li><a th:href="@{/contractService/addcontractService/{offerid}(offerid=${offerObj.id})}" title="#">Add contractServices</a></li>
+													 <li><a th:href="@{/popularoffer/editoffer/{offerid}(offerid=${offerObj.id})}">Edit</a>
+													</li> 
+													 <li><a th:href="@{/popularoffer/deleteoffer/{offerid}(offerid=${offerObj.id})}">Delete</a>
+													</li> 
 												</ul>
 											</li>
 										</ul> 
 									</td>
-
 										</tr>
 							</div>
 						</div>
-
-						<!-- abailablility -->
 					</div>
 				</div>
 			</div>
 			<!-- main area end -->
 		</div>
 	</main>
-
 	<!-- SCRIPTS -->
 	<script src="../js/jquery.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
-	<!-- <script src="../js/jquery.sticky.js"></script>
-    <script src="../js/jquery.stellar.min.js"></script>
-    <script src="../js/wow.min.js"></script>
-    <script src="../js/smoothscroll.js"></script>
-    <script src="../js/owl.carousel.min.js"></script>
-    <script src="./assets/js/script.js"></script> -->
-
-	<script type="text/javascript" charset="utf8"
-		src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
-	<script type="text/javascript" charset="utf8"
-		src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" charset="utf8"src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" charset="utf8"src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
 	<script>
 		$(function () {
 			$("#list").dataTable();

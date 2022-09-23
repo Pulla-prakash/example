@@ -5,8 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-//Ajith
+/*
+Description:This class is a pojo class for DoctorBranch table.
+Author: Ajith.
+*/
 @Entity
 @Table(name = "doctor_branch")
 public class DoctorBranch {
@@ -21,7 +23,6 @@ public class DoctorBranch {
 	public void setDoctorBranchId(long doctorBranchId) {
 		this.doctorBranchId = doctorBranchId;
 	}
-	
 	public long getDoctorId() {
 		return doctorId;
 	}

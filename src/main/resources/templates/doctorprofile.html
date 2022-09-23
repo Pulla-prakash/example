@@ -23,7 +23,7 @@
 		<div class="container-fluid">
 			<div class="header-box">
 				<h4>Vcare</h4>
-				<a th:href="@{/logout}">LogOut</a>
+				<a th:href="@{/logoutDoc}">LogOut</a>
 			</div>
 		</div>
 	</header>
@@ -38,32 +38,26 @@
 							<div class="Heading">
 								<h4>Dashboard</h4>
 							</div>
-							
-							
-							<div class="sidebar-item">
-								<img src="../images/Icons/app.png" alt=" icon" class="img-fluid" />
-								<a th:href="@{/appointmentlist/{did}(did=${session.DocId})}">Appointments</a>
-							</div>
-							
-							<div class="sidebar-item">
-								<img src="../images/Icons/cal.png" alt="icon" class="img-fluid" />
-								<a th:href="@{/availabilityList/{id}(id=${session.DocId})}">Availability</a>
+								<div class="sidebar-item">
+								<img src="/images/Icons/app.png" alt=" icon" class="img-fluid" />
+								<a th:href="@{/appointment/appointmentlist/{did}(did=${session.DocId})}">Appointments</a>
 							</div>
 							<div class="sidebar-item">
-								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid" />
+								<img src="/images/Icons/cal.png" alt="icon" class="img-fluid" />
+								<a th:href="@{/DoctorAvailability/availabilityList/{doctorId}(doctorId=${session.DocId})}">Availability</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="/images/Icons/profile.png" alt="icon" class="img-fluid" />
 								<a th:href="@{/updatedDoctorProfile/{did}(did=${session.DocId})}">Doctor Profile</a>
 							</div>
 							<div class="sidebar-item">
-								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
-								<a th:href="@{/prescriptionlist/{did}(did=${session.DocId})}">Patients Prescription</a>
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/Prescription/prescriptionlist/{doctorId}(doctorId=${session.DocId})}">Patients Prescription</a>
 							</div>
-							
 							<div class="sidebar-item">
-								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
-								<a th:href="@{/payment/{docId}(docId=${session.DocId})}">Payments</a>
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/doctor/payment/{docId}(docId=${session.DocId})}">Payments</a>
 							</div>
-							
-							
 						</div>
 					</section>
 					<!-- sidebar end -->

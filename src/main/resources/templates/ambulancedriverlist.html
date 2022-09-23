@@ -78,6 +78,7 @@
 					<div class="main-area">
 						<!-- page Heading -->
 						<div class="page-heading">
+						 <div class="header-box">
 							<h1>Ambulance Driver List</h1>
 							<a th:href="@{/AddAmbdriver/{HbranchId}(HbranchId=${session.brnchid})}" class="img-fluid">Add Driver</a>
 						</div>
@@ -100,10 +101,10 @@
 											<li><a href="#" title="#">Select</a>
 												<ul class="cm">
 													<li><a
-															th:href="@{/editAmbulancedriver/{ambdriversId}(ambdriversId=${ambdriverObj.ambdriversId})}">Edit</a>
+															th:href="@{/AmbulanceDriverController/editAmbulancedriver/{ambdriversId}(ambdriversId=${ambdriverObj.ambdriversId})}">Edit</a>
 													</li>
 													<li><a
-															th:href="@{/deleteAmbdriver/{id}(id=${ambdriverObj.ambdriversId})}">Delete</a>
+															th:href="@{/AmbulanceDriverController/deleteAmbulancedriver/{id}(id=${ambdriverObj.ambdriversId})}">Delete</a>
 												</ul>
 											</li>
 										</ul>

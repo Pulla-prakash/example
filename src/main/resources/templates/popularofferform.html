@@ -40,17 +40,60 @@
 							<div class="Heading">
 								<h4>Dashboard</h4>
 							</div>
-
-							<!-- <div class="sidebar-item">
-								<img src="../images/Icons/pprofile.png" alt="icon" class="img-fluid" />
-								<a th:href="@{/Dephome}">DepartmentList</a>
+						   <div class="sidebar-item">
+								<img src="../images/Icons/app.png" alt=" icon" class="img-fluid">
+								<a href="/hospital/hospitalList">Hospital</a>
 							</div>
-
+							
 							<div class="sidebar-item">
-								<img src="../images/Icons/pprofile.png" alt="icon" class="img-fluid" />
-								<a th:href="@{/}">Employee Form</a>
+								<img src="../images/Icons/cal.png" alt="icon" class="img-fluid">
+								<a th:href="@{/Drlist}">Doctor</a>
 							</div>
-						</div> -->
+							<div class="sidebar-item">
+								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/patient/patientsList}">Patient</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/Appointment}">Appointments</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/Insurance/insurancelist/{adminid}(adminid=${session.AdminId})}">Insurance</a>
+							</div>
+
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/pprofile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/news/newstable}">News</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/pprofile.png" alt="icon" class="img-fluid">
+								<a th:href="@{/SocialNetwork/networkList}">Social Network</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/payments}">Payments</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/Aboutus/addabout}">About Us</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/popularoffer/offerlist}">Offer services</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/laboratory/laboratoryList}">Laboratory</a>
+							</div>
+						</div>
 					</section>
 					<!-- sidebar end -->
 				</div>
@@ -59,7 +102,7 @@
 					<div class="main-area">
 						<!-- page Heading -->
 						<div class="page-heading">
-							<h1>About us</h1>
+							<h1>Popular offers </h1>
 						</div>
 						<!-- page Heading End -->
 
@@ -67,7 +110,7 @@
 
 						<div class="avaliability-box">
 							<div class="form-box">
-								<form th:action="@{/saveoffer}" th:object="${popularoffers}" method="post"  enctype="multipart/form-data">
+								<form th:action="@{/popularoffer/saveoffer}" th:object="${popularoffers}" method="post"  enctype="multipart/form-data">
 
 
 

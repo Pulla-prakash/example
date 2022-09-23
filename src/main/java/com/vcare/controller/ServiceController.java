@@ -1,16 +1,12 @@
 package com.vcare.controller;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.vcare.beans.Doctor;
 import com.vcare.beans.Hospital;
 import com.vcare.beans.HospitalBranch;
@@ -28,6 +22,7 @@ import com.vcare.beans.News;
 import com.vcare.beans.Rating;
 import com.vcare.beans.Services;
 import com.vcare.repository.DoctorRatingRepository;
+import com.vcare.repository.HospitalBranchRepository;
 import com.vcare.repository.ServiceRepository;
 import com.vcare.service.DoctorRatingService;
 import com.vcare.service.DoctorService;
@@ -40,11 +35,12 @@ import com.vcare.service.ServiceServiceImpl;
 @Controller
 @RequestMapping("/page")
 public class ServiceController {
-
 	@Autowired
 	ServiceService serviceServices;
 	@Autowired
 	ServiceRepository serviceRrepository;
+	@Autowired
+	NewsService newsService;
 	@Autowired
 	ServiceServiceImpl serviceServiceImpl;
 	@Autowired
@@ -59,37 +55,24 @@ public class ServiceController {
 	DoctorRatingRepository doctorRatingRepository;
 	@Autowired
 	DoctorRatingService doctorRatingService;
-
+	@Autowired
+	HospitalBranchRepository branchRepository;
 	static Logger log = Logger.getLogger(ServiceController.class.getClass());
-
-	@GetMapping("/service/{id}")
-	public String list(Model model,@PathVariable("id")int id) {
-	List<Services> serviceList = serviceServiceImpl.servicesByBranch(id);
-	model.addAttribute("serviceList", serviceList);
-	
-	HospitalBranch objBrnach=hospitalBranchService.getHospitalbranchId(id);
+	@GetMapping("/service/{serviceId}")
+	public String list(Model model,@PathVariable("serviceId")int serviceId) {
+	List<Services> serviceList = serviceServiceImpl.servicesByBranch(serviceId);
+	HospitalBranch objBrnach=hospitalBranchService.getHospitalbranchId(serviceId);
 	model.addAttribute("branch", objBrnach.getHospitalBranchId());
+	model.addAttribute("serviceList", serviceList);
 	return "servicelist";
 	}
-
-
-
-	@RequestMapping(value = "/serPage/{id}", method = RequestMethod.GET)
-	public String getAllServices(Model model, @PathVariable("id") int branchId,
+	@RequestMapping(value = "/serPage/{branchId}", method = RequestMethod.GET)
+	public String getServiceList(Model model, @PathVariable("branchId") int branchId,
 			@ModelAttribute(value = "serviceList") Services objThServ,HttpServletRequest request) {
-		
 		HospitalBranch branch=hospitalBranchService.getHospitalbranchId(branchId);
-		
 		model.addAttribute("HospitalbranchId", branch.getHospitalBranchId());
-		log.info("hello :::::::"+branch.getHospitalBranchId());
-
+		log.debug("Branch Id:::::::"+branch.getHospitalBranchId());
 		List<Services> objService = serviceRrepository.findservicesbyHospitalBranch(branchId);
-		List<Services> list = new ArrayList<>();
-		for (Services serve : objService) {
-			if (serve.getIsActive() == 'Y' || serve.getIsActive() == 'y') {
-				list.add(serve);
-			}
-		}
 		HttpSession session=request.getSession();
 		if(session.getAttribute("seradd")=="seradd") {
 			model.addAttribute("adminmsg",session.getAttribute("sername")+"\t Service \t Added");
@@ -105,139 +88,108 @@ public class ServiceController {
 			model.addAttribute("adminmsg","\tSuccessfully deletede");
 			session.setAttribute("serdelete","");
 		}
-		model.addAttribute("serviceList", list);
+		model.addAttribute("serviceList", objService);
 		return "servicelist";
 	}
-	@RequestMapping(value = "/addHospitalBranch/{id}", method = RequestMethod.GET)
-	public String saveForm(Model model, @PathVariable("id") int id, Services objService) {
+	@RequestMapping(value = "/addHospitalBranch/{branchId}", method = RequestMethod.GET)
+	public String serviceForm(Model model, @PathVariable("branchId") int branchId, Services objService) {
 		try {
 			model.addAttribute("serviceObj", objService);
-			log.info("service id::" + objService.getServiceId());
-			log.info("Branch id::" + id);
-			HospitalBranch hospBObj = hospitalBranchService.getHospitalbranchId(id);
+			log.debug("service id::" + objService.getServiceId());
+			log.debug("Branch id::" + branchId);
+			HospitalBranch hospBObj = hospitalBranchService.getHospitalbranchId(branchId);
 			model.addAttribute("hospBObj", hospBObj);
-			HospitalBranch objBranch = hospitalBranchService.getHospitalbranchId(id);
+			HospitalBranch objBranch = hospitalBranchService.getHospitalbranchId(branchId);
 			model.addAttribute("HospitalbranchId", hospBObj.getHospitalBranchId());
 			model.addAttribute("name", objBranch.getHospitalBranchName());
-			log.info("BranchName ::" + objBranch.getHospitalBranchName());
-
+			log.debug("BranchName ::" + objBranch.getHospitalBranchName());
 			return "serviceform";
 		} catch (Exception ex) {
-
 		}
-		log.info("service id::" + objService.getServiceId());
+		log.debug("service id::" + objService.getServiceId());
 		model.addAttribute("serviceObj", objService);
 		return "serviceform";
 	}
-
-	@RequestMapping(value = "/addHospital/{id}", method = RequestMethod.GET)
-	public String Hospital(Model model, @PathVariable("id") int id, Services objServices) {
-		return "serviceform";
-	}
-
-	@RequestMapping(value = "/saveForm/{id}", method = RequestMethod.POST)
-	public String addService(Model model, Services objServices,@PathVariable("id")int id,HttpServletRequest request) {
-		System.out.println("hsgghfjhfgej:::"+objServices.getServiceId());
-		
-		HospitalBranch branchObj=hospitalBranchService.getHospitalbranchId(id);
+	@RequestMapping(value = "/saveForm/{branchId}", method = RequestMethod.POST)
+	public String addService(Model model, Services objServices,@PathVariable("branchId")int branchId,HttpServletRequest request) {
+		HospitalBranch branchObj=hospitalBranchService.getHospitalbranchId(branchId);
 		model.addAttribute("ObjId", branchObj.getHospitalBranchId());
-		log.info("Service id:::" + objServices.getServiceId());
-		objServices.setIsActive('Y');
+		log.debug("Service id:::" + objServices.getServiceId());
 		HttpSession session =request.getSession();
 		session.setAttribute("sername", objServices.getServiceName());
 		if(objServices.getServiceId()!=null) {
 			session.setAttribute("serup","serup");
 			session.setAttribute("sername", objServices.getServiceName());
-			
-		}else {
+		}else 
 			session.setAttribute("seradd", "seradd");
-		}
 		serviceServices.UpdateServices(objServices);
-		log.info("hello:::" + objServices.getServiceId());
 		return "redirect:/page/serPage/"+branchObj.getHospitalBranchId();
-		
 	}
-
-	@GetMapping("/editService/{id}")
-	public String getById(Model model, @PathVariable("id") int servicecId) {
-		Services objSecService = serviceServices.getById(servicecId);
-		log.info("inside getHospitalbranchId id is:::" + objSecService.getServiceId());
+	@GetMapping("/editService/{serviceId}")
+	public String getById(Model model, @PathVariable("serviceId") int serviceId) {
+		Services objSecService = serviceServices.getById(serviceId);
+		log.debug("inside getHospitalbranchId id is:::" + objSecService.getServiceId());
 		model.addAttribute("serviceObj", objSecService);
 		model.addAttribute("HospitalbranchId", objSecService.getHospitalbranch().getHospitalBranchId());
-		log.info("inside editHospitalBranch id:::" + objSecService.getHospitalbranch().getHospitalBranchId());
+		log.debug("inside editHospitalBranch id:::" + objSecService.getHospitalbranch().getHospitalBranchId());
 		return "serviceform";
-
 	}
-
-	@GetMapping("/deleteService/{id}")
-	public String deleteService(Model model, @PathVariable("id") int id,HttpServletRequest request) {
-		log.info("inside deleteHospitalBranch id:::" + id);
-
-		Services inactive = serviceServices.getById(id);
+	@GetMapping("/deleteService/{serviceId}")
+	public String deleteService(Model model, @PathVariable("serviceId") int serviceId,HttpServletRequest request) {
+		Services inactive = serviceServices.getById(serviceId);
 		inactive.setIsActive('N');
 		HttpSession session =request.getSession();
 		session.setAttribute("serdelete","serdelete");
 		serviceServices.UpdateServices(inactive);
 		return "redirect:/page/serpage/"+inactive.getHospitalbranch().getHospitalBranchId();
-
 	}
-	@GetMapping("/dynamicservices/{id}")
-	public String dynamicServices(Model model, @PathVariable String id,
+	@GetMapping("/dynamicservices/{serviceName}")
+	public String dynamicServices(Model model, @PathVariable String serviceName,
 			@RequestParam(name = "serviceList", required = false) List<String> serviceList, Services serviceObj) {
 		List<String> serviceNames = serviceRepository.findDistinctService(serviceList);
 		for (String s : serviceNames) {
-			if (id.equalsIgnoreCase(s)) {
+			if (serviceName.equalsIgnoreCase(s)) {
 				// creating branches for services
-				List<HospitalBranch> hospObj = hospitalBranchService.getAllHospitalbranch();
-
+				List<HospitalBranch> hospObj = branchRepository.hospitalBranches();
 				// model.addAttribute("hospitalBranchList", hospObj);
-				model.addAttribute("serviceList", id);
+				model.addAttribute("serviceList", serviceName);
 				// Description of service
-				List<Services> sameServices = serviceRepository.findService(id);
+				List<Services> sameServices = serviceRepository.findService(serviceName);
 				model.addAttribute("description", sameServices.get(0).getDescription());
-
-				log.info("DESCRIPTION BLOCK");
+				log.debug("DESCRIPTION BLOCK");
 				Set<String> dhbname = new HashSet();
 				Set<String> bloc = new HashSet();
 				for (int i = 0; i < hospObj.size(); ++i) {
-					log.info("1ST FOR LOOP BLOCK");
+					log.debug("1ST FOR LOOP BLOCK");
 					for (int j = 0; j < sameServices.size(); j++) {
-						log.info("2ND FOR LOOP BLOCK");
-						log.info(sameServices.get(j).getServiceName());
-						log.info(sameServices.get(j).hospitalbranch.getHospitalBranchName());
-						log.info(id);
-						if (sameServices.get(j).getServiceName().equalsIgnoreCase(id)) {
+						log.debug("2ND FOR LOOP BLOCK");
+						log.debug(sameServices.get(j).getServiceName());
+						log.debug(sameServices.get(j).hospitalbranch.getHospitalBranchName());
+						if (sameServices.get(j).getServiceName().equalsIgnoreCase(serviceName)) {
 							String str = sameServices.get(j).getHospitalbranch().getHospitalBranchName();
-
 							dhbname.add(str);
-
-							log.info("IF BLOCK");
+							log.debug("IF BLOCK");
 						}
 					}
 				}
-				log.info(dhbname);
+				log.debug(dhbname);
 				model.addAttribute("dhbname", dhbname);
 				model.addAttribute("bloc", bloc);
-				return "dynamicservice";
+				return "servicedynamic";
 			}
 		}
 		return "redirect:/vcare";
 	}
-
-	@GetMapping("/indexdoctors/{id}")
-	public String indexDoctors(Model model, @PathVariable("id") int id) {
+	@GetMapping("/indexdoctors/{doctorId}")
+	public String indexDoctors(Model model, @PathVariable("doctorId") int doctorId) {
 		List<Doctor> doctorList = doctorService.getAllDoctor();
-		System.out.println(doctorList);
-		System.out.println("hoo ");
-
+		log.debug(doctorList);
 		model.addAttribute("doctorList", doctorList);
-
-		Doctor doc = doctorService.GetDocotorById(id);
-		System.out.println(doc.getDoctorId());
-
-		if (id == doc.getDoctorId()) {
-			model.addAttribute("doc", doctorService.GetDocotorById(id));
-			System.out.println(doc);
+		Doctor doc = doctorService.GetDocotorById(doctorId);
+		log.debug(doc.getDoctorId());
+		if (doctorId == doc.getDoctorId()) {
+			model.addAttribute("doc", doctorService.GetDocotorById(doctorId));
+			log.debug(doc);
 		}
 		double average;
 		long totalrating;
@@ -248,7 +200,6 @@ public class ServiceController {
 			model.addAttribute("average", average);
 		} else {
 			totalrating = doctorRatingRepository.sumOfRating(doc.getDoctorId());// Sum of ratings
-
 			List<Rating> pcount = doctorRatingService.GetAllDoctorRating();// totol entries
 			long count = pcount.size(); // no.of patinets given rating
 			average = (float) totalrating / count;
@@ -267,33 +218,20 @@ public class ServiceController {
 		model.addAttribute("onecount", onecount);
 		return "doctorscreen";
 	}
-
-	@GetMapping("/indexdoctorscreen/{id}")
-	public String indexDoctorScreen(Model model, @PathVariable("id") int id) {
-		Doctor doc = doctorService.GetDocotorById(id);
-		if (id == doc.getDoctorId()) {
-			model.addAttribute("doc", doctorService.GetDocotorById(id));
-			System.out.println(doc);
+	@GetMapping("/indexdoctorscreen/{doctorId}")
+	public String indexDoctorScreen(Model model, @PathVariable("doctorId") int doctorId) {
+		Doctor doc = doctorService.GetDocotorById(doctorId);
+		if (doctorId == doc.getDoctorId()) {
+			model.addAttribute("doc", doctorService.GetDocotorById(doctorId));
+			log.debug(doc);
 		}
-		List<Rating> ratingList = doctorRatingRepository.docrating(id);
+		List<Rating> ratingList = doctorRatingRepository.docrating(doctorId);
 		model.addAttribute("rating", ratingList);
 		return "doctorscreen";
 	}
-
-	@GetMapping(value = "/getSubCatagory", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<Services> getSubCatagory(@RequestParam Integer hospitalBranchId) {
-
-		List<Services> list = serviceServices.findSubCatagoryByCatagory(hospitalBranchId);
-
-		System.out.println("catagoryId " + hospitalBranchId);
-
-		return list;
-	}
-	@Autowired
-	NewsService newsService;
-	@GetMapping("/servicehospitalPage/{id}")
-	public String hospitalPage(Model model,@PathVariable("id") int HospitalbranchId){
-	List<HospitalBranch> hospBranchList = hospitalBranchService.getAllHospitalbranch();
+	@GetMapping("/servicehospitalPage/{HospitalbranchId}")
+	public String viewHospitalPage(Model model,@PathVariable("HospitalbranchId") int HospitalbranchId){
+	List<HospitalBranch> hospBranchList = branchRepository.hospitalBranches();
 	model.addAttribute("hospitalBranchList", hospBranchList);
 	List<News> newslists = newsService.getLatestNews();
 	model.addAttribute("newsLists", newslists);
@@ -301,14 +239,12 @@ public class ServiceController {
 	model.addAttribute("objHospitalBranch", objHospitalBranch); 
 	return "hospitalpage";
 	}
-	
 	@GetMapping("/viewAllServices")
-    public String viewHomePages(Model model) {
+    public String viewHomeServices(Model model) {
         List<Hospital> hospList = hospitalService.getAllHospitals();
         model.addAttribute("hospitalsList", hospList);
-        List<Services> servicelist = serviceServices.getAllServices();
+        List<Services> servicelist = serviceServices.getAllActiveServices();
         model.addAttribute("servicelist", servicelist);
         return "indexservices";
     }
-
 }

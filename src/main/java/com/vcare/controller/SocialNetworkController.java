@@ -24,26 +24,18 @@ import com.vcare.beans.SocialNetworks;
 import com.vcare.service.SocialNetworkService;
 
 @Controller
+@RequestMapping("/SocialNetwork")
 public class SocialNetworkController {
 
 	@Autowired
-
 	SocialNetworkService socialNetworkService;
 
 	static Logger log = Logger.getLogger(SocialNetworkController.class.getClass());
 
-	@GetMapping("/network")
+	@GetMapping("/networkList")
 	public String getAllnetworks(Model model, SocialNetworks socialNetwork,HttpServletRequest request) {
-
-		List<SocialNetworks> networkList = socialNetworkService.getAllNetworks();
-		log.info("list of all departments");
-
-		List<SocialNetworks> list = new ArrayList<>();
-		for (SocialNetworks network : networkList) {
-			if (network.getIsActive() == 'Y' || network.getIsActive() == 'y') {
-				list.add(network);
-			}
-		}
+		List<SocialNetworks> networkList = socialNetworkService.getAllSocialNetwork();
+		log.debug("list of all departments");
 		HttpSession session=request.getSession();
 		if(session.getAttribute("netadd")=="netadd") {
 			model.addAttribute("adminmsg",session.getAttribute("netname")+"\t Added" );
@@ -59,36 +51,33 @@ public class SocialNetworkController {
 			model.addAttribute("adminmsg", "Successfully deleted");
 			session.setAttribute("netdelete", "");
 		}
-		model.addAttribute("networkList", list);
+		model.addAttribute("networkList", networkList);
 		model.addAttribute("objName", socialNetwork.getNetworkName());
 		return "networklist";
 	}
 
 	@RequestMapping(value = "/addnetwork", method = RequestMethod.GET)
-	public String newnetwork(Model model, @ModelAttribute(value = "networkObj") SocialNetworks socialNetwork) {
-		log.info("network form ");
+	public String addingNetworksByForm(Model model, @ModelAttribute(value = "networkObj") SocialNetworks socialNetwork) {
+		log.debug("network form ");
 		model.addAttribute("networkObj", socialNetwork);
-
 		return "networkform";
 	}
 
 	@RequestMapping(value = "/savenetwork", method = RequestMethod.POST)
-	public String addNetwork(Model model, @RequestParam("file") MultipartFile file,
+	public String saveNetworks(Model model, @RequestParam("file") MultipartFile file,
 			@ModelAttribute(value = "networkObj") SocialNetworks socialNetwork,HttpServletRequest request) throws IOException {
-		socialNetwork.setIsActive('Y');
-		log.info("inside deleteDepartment id:::" + socialNetwork.getNetworkId());
-		log.info("inside deleteDepartment name:::" + socialNetwork.getNetworkName());
-if(file.getOriginalFilename()=="") {
-	socialNetwork.setIcon(socialNetwork.getIcon());
-}else {
-		socialNetwork.setIcon(Base64.getEncoder().encodeToString(file.getBytes()));
-}
+		log.debug("inside deleteDepartment id:::" + socialNetwork.getNetworkId());
+		log.debug("inside deleteDepartment name:::" + socialNetwork.getNetworkName());
+        if(file.getOriginalFilename()=="") {
+	     socialNetwork.setIcon(socialNetwork.getIcon());
+          }else {
+		 socialNetwork.setIcon(Base64.getEncoder().encodeToString(file.getBytes()));
+          }
 		model.addAttribute("networkObj", socialNetwork);
 		socialNetworkService.addService(file, socialNetwork);
 		List<SocialNetworks> networkList = socialNetworkService.getAllNetworks();
 		model.addAttribute("networkList", networkList);
 		HttpSession session=request.getSession();
-		
 		session.setAttribute("netname", socialNetwork.getNetworkName());
 		if(socialNetwork.getNetworkId()!=0) {
 			session.setAttribute("netUp", "netUp");
@@ -96,25 +85,19 @@ if(file.getOriginalFilename()=="") {
 		}else {
 			session.setAttribute("netadd", "netadd");
 		}
-		return "redirect:/network";
+		return "redirect:/SocialNetwork/networkList";
 	}
-
-	@GetMapping("/editNetwork/{id}")
-	public String getById(Model model, @PathVariable("id") int networkId) {
-
+	@GetMapping("/editNetwork/{networkId}")
+	public String editNetworkById(Model model, @PathVariable("networkId") int networkId) {
 		SocialNetworks objSecNetwork = socialNetworkService.getNetworkById(networkId);
-		log.info("Edit of department in ...");
-		log.info("inside getHospitalbranchId id is:::" + socialNetworkService.getNetworkById(networkId));
+		log.debug("Edit of networkServices in ...");
+		log.debug("inside network service  id is:::" + socialNetworkService.getNetworkById(networkId));
 		model.addAttribute("networkObj", objSecNetwork);
-
 		return "networkform";
-
 	}
-
-	@GetMapping("/deleteNetwork/{id}")
-	public String deleteNetwork(Model model, @PathVariable("id") int networkId,HttpServletRequest request) {
-		log.info("inside deleteHospitalBranch id:::" + networkId);
-
+	@GetMapping("/deleteNetwork/{networkId}")
+	public String deleteNetwork(Model model, @PathVariable("networkId") int networkId,HttpServletRequest request) {
+		log.debug("inside deleteHospitalBranch id:::" + networkId);
 		SocialNetworks inactive = socialNetworkService.getNetworkById(networkId);
 		inactive.setIsActive('N');
 		socialNetworkService.updateNetwork(inactive);
@@ -122,8 +105,6 @@ if(file.getOriginalFilename()=="") {
 		model.addAttribute("networkList", networkList);
 		HttpSession session=request.getSession();
 		session.setAttribute("netdelete", "netdelete");
-		return "redirect:/network";
-
+		return "redirect:/SocialNetwork/networkList";
 	}
-
 }

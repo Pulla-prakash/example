@@ -1,11 +1,9 @@
 package com.vcare.repository;
 
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
 import com.vcare.beans.Employees;
 
 @Repository
@@ -23,6 +21,9 @@ public interface EmployeesRepository extends JpaRepository<Employees, Integer> {
 	
 	@Query("select al from Employees al WHERE lower(al.email)=lower(?1)")
     public Employees findByEmail(String email);
+	
+	@Query(value="select al from Employees al where al.isactive ='y' or al.isactive ='Y' and al.departmentId=?1")
+	List<Employees> getAllActiveEmployee(int departmentId);
 
 
 }

@@ -16,4 +16,5 @@ public interface AmbulanceDriverService {
  AmbulanceDriverAssosiation getById(int ambdriversId);
  AmbulanceDriverAssosiation getAmbdriverId(int ambdriversId);
  String validateduplicate(String ambulancetype);
+ List<AmbulanceDriverAssosiation> getAllAmbulanceDriverActiveList(int hbranchId);
 }

@@ -52,7 +52,7 @@
 							</div>
 							<div class="sidebar-item">
 								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid">
-								<a th:href="@{/patientsList}">Patient</a>
+								<a th:href="@{/patient/patientsList}">Patient</a>
 							</div>
 							<div class="sidebar-item">
 								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid">
@@ -61,7 +61,7 @@
 							
 							<div class="sidebar-item">
 								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid">
-								<a th:href="@{/insurancelist/{id}(id=${session.AdminId})}">Insurance</a>
+								<a th:href="@{/Insurance/insurancelist/{adminid}(adminid=${session.AdminId})}">Insurance</a>
 							</div>
 
 							
@@ -72,11 +72,28 @@
 							
 							<div class="sidebar-item">
 								<img src="../images/Icons/pprofile.png" alt="icon" class="img-fluid">
-								<a th:href="@{/network}">Social Network</a>
+								<a th:href="@{/SocialNetwork/networkList}">Social Network</a>
 							</div>
-
-
-
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/payments}">Payments</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/Aboutus/addabout}">About Us</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/popularoffer/offerlist}">Offer services</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="/images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/laboratory/laboratoryList}">Laboratory</a>
+							</div>
 						</div>
 					</section>
 					<!-- sidebar end -->
@@ -89,7 +106,7 @@
 							<!-- <h1>Hospital Details</h1> -->
 							<div class="header-box">
 								<h2>List Of Networks</h2>
-								<a th:href="@{/addnetwork}">Add Network</a>
+								<a th:href="@{/SocialNetwork/addnetwork}">Add Network</a>
 							</div>
 							<h5 style=color:darkgreen th:text="${adminmsg}"></h5>
 						</div>
@@ -113,10 +130,10 @@
 										<ul class="pm">
 											<li><a href="#" title="#">Select</a>
 												<ul class="cm">
-													<li><a th:href="@{/editNetwork/{id}(id=${netObj.networkId})}"
+													<li><a th:href="@{/SocialNetwork/editNetwork/{networkId}(networkId=${netObj.networkId})}"
 															title="#">Edit</a></li>
 													<li><a
-															th:href="@{/deleteNetwork/{id}(id=${netObj.networkId})}">Delete</a>
+															th:href="@{/SocialNetwork/deleteNetwork/{networkId}(networkId=${netObj.networkId})}">Delete</a>
 													</li>
 													
 												</ul>

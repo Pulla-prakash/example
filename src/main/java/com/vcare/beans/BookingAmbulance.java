@@ -1,25 +1,28 @@
 package com.vcare.beans;
-
 import java.sql.Date;
 import java.time.LocalDate;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.Table;
+/*
+Description:This  POJO class is  for Ambulance Bookings   table.
+it strores all the booking details of ambulance
+Author: Abhilash.
+*/
 @Entity
+@Table(name = "BookingAmbulance")
 public class BookingAmbulance {
-	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int bookingId;
 	private String ambulancetype;
 	private String driverName;
 	private String addressFrom;
 	private String toAddress;
-	private LocalDate Date; 
-	private char isactive;
+	private LocalDate Date;
+	private char isactive = 'Y';
 	private String createdBy;
 	private String updateBy;
 	private Date updated;
@@ -42,7 +45,6 @@ public class BookingAmbulance {
 	public void setDriverName(String driverName) {
 		this.driverName = driverName;
 	}
-	
 	public String getAddressFrom() {
 		return addressFrom;
 	}
@@ -91,6 +93,5 @@ public class BookingAmbulance {
 	public void setCreated(LocalDate created) {
 		this.created = created;
 	}
-	
 
 }

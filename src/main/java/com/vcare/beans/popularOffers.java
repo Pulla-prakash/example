@@ -10,28 +10,35 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
+/*
+Description:This class is a pojo class for popularOffers table.
+Author: Abhilash.
+*/
 @Entity
 @Table(name = "popularOffer")
 public class popularOffers {
-	
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	
 	private int id;
 	private String name;
 	@Lob
 	private String image;
-	
+	private char Isactive = 'Y';
 	@OneToMany(mappedBy = ("popularOffers"), cascade = CascadeType.ALL)
-	private List<ContractEmployees> contractemployees;
+	private List<ContractEmployee> contractemployees;
+	@OneToMany(mappedBy = ("Offers"), cascade = CascadeType.ALL)
+	private List<ContractService> contractServices;
 	
-	
-	public List<ContractEmployees> getContractemployees() {
+	public List<ContractService> getContractServices() {
+		return contractServices;
+	}
+	public void setContractServices(List<ContractService> contractServices) {
+		this.contractServices = contractServices;
+	}
+	public List<ContractEmployee> getContractemployees() {
 		return contractemployees;
 	}
-	public void setContractemployees(List<ContractEmployees> contractemployees) {
+	public void setContractemployees(List<ContractEmployee> contractemployees) {
 		this.contractemployees = contractemployees;
 	}
 	public int getId() {
@@ -52,11 +59,10 @@ public class popularOffers {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	
-	
-	
-	
-	
-	
-
+	public char getIsactive() {
+		return Isactive;
+	}
+	public void setIsactive(char isactive) {
+		Isactive = isactive;
+	}
 }

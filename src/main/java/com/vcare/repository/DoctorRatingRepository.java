@@ -39,4 +39,6 @@ public interface DoctorRatingRepository extends JpaRepository<Rating,Long>{
 	  @Query("Select count(rating) from Rating r where r.doctor.doctorId=?1")
 	    public Long totalReviews(int did);
 	
+	  @Query("select al from Rating al where al.doctor.doctorId=?1")
+      List<Rating> getRatingByDoctorId(int doctorId);
 }

@@ -137,8 +137,7 @@
 								data-target="#flipFlopContractLog">Login </a></li>
 						</ul>
 					</li>
-					<li class="appointment-btn"><a href="#appointment">Book
-							appointment</a></li>
+					<li class="appointment-btn"><a th:href="@{/logout}">Logout</a></li>
 				</ul>
 				<!-- <form class="navbar-form navbar-left" action="/action_page.php">
 					<div class="input-group">
@@ -454,13 +453,16 @@
 		<div class="container" >
 		
 			<div class="about-info">
-				<h2 class="wow fadeInUp" align="center" data-wow-delay="0.1s">
-					Vcare Media Coverage</h2>
+				<h2 class="wow fadeInUp" align="center" data-wow-delay="0.1s"
+					 th:text="${name}"> </h2>
+					
+					
 			</div>
 			<div class="clearfix"></div>
 			<div class="slider-whole-box">
 				<div align="center" class="slider-box">
 					<!-- slider -->
+					
 					<div th:each="offersObj:${offer}">
 						<div class="slider-self">
 							<div class="slider-inside-box">
@@ -469,16 +471,19 @@
 									         <img src="../images/health.png"
 										class="img-responsive" alt="" /> 
 										<h6>
-										<span th:if="${pId == 'null'}">hello</span>
-											<a  th:href="@{/slotsServices/{pid}/{cid}(pid=${pId},cid=${offersObj.id})}">
-												<th th:text="${offersObj.services}"></th></a>
+											<span th:if="${session.pId == null}">Please Login....!</span>
+											<span th:if="${session.pId != null}"><a  th:href="@{/slotsServices/{pid}/{csid}(pid=${session.pId},csid=${offersObj.conserviceId})}">
+												<h6 th:text="${offersObj.serviceName}"></h6></a></span>
 										</h6>
 										<span class="plus-box"></span>
+										
 									</div>
 								</div>
 							</div>
+							
 						</div>
 					</div>
+				
 				</div>
 			</div>
 		</div>

@@ -97,7 +97,7 @@
 										<td  th:text="${ambdriverObj.driverId}"></td>
 										<td> <a th:href="@{/changestatus/{id}/{ambdriversId}(id=${hbranchId},ambdriversId=${ambdriverObj.ambdriversId})}"th:text="${ambdriverObj.status}"></a></td>
 										<!-- <td  th:text="${ambdriverObj.status}"></td> -->
-											<td><a th:href="@{/bookingform/{branchid}/{ambid}/{empid}(branchid=${hbranchId},ambid=${ambdriverObj.ambdriversId},empid=${empid})}">select</a>
+											<td><a th:href="@{/bookingambulance/bookingform/{branchid}/{ambid}/{empid}(branchid=${hbranchId},ambid=${ambdriverObj.ambdriversId},empid=${empid})}">select</a>
 																	<!-- <li><a
 																			th:href="@{/deletedoctors/{Id}(Id=${Doctors.doctorId})}">Delete</a>
 																	</li> -->

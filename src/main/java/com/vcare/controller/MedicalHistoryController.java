@@ -1,4 +1,3 @@
-
 package com.vcare.controller;
 
 import java.io.IOException;
@@ -8,10 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -24,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.vcare.beans.MedicalHistory;
 import com.vcare.beans.Patients;
 import com.vcare.repository.MedicalHistoryRepository;
@@ -34,42 +30,35 @@ import com.vcare.service.PatientsService;
 @Controller
 @RequestMapping("/med")
 public class MedicalHistoryController {
-
 	@Autowired
-	MedicalHistoryRepository repo;
+	MedicalHistoryRepository medicalHistoryRepository;
 	@Autowired
 	MedicalHistoryService medicalHistoryService;
-
 	@Autowired
 	PatientsService patientsService;
-
 	static Logger log = Logger.getLogger(MedicalHistoryController.class.getClass());
-
-	@GetMapping("/medhistory/{id}")
-	public String medHistory(Model model, @PathVariable("id") int id, MedicalHistory medObj) {
-		log.info(id);
-
-		Patients patient = patientsService.getPatientById(id);
+	@GetMapping("/medhistory/{patientId}")
+	public String medHistory(Model model, @PathVariable("patientId") int patientId, MedicalHistory medObj,HttpSession session) {
+		log.debug(patientId);
+      if(session.getAttribute("pId")==null) {
+    	  return "redirect:/";
+      } 
+		Patients patient = patientsService.getPatientById(patientId);
 		model.addAttribute("patientObj", patient.getPatientId());
-
 		model.addAttribute("medObj", medObj);
-		log.info(id);
-
-		return "medicalhistory";
+		return "medicalhistoryofpatient";
 	}
-
-	@RequestMapping(value = "/uploadImage/{id}", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public String fileUpload(@RequestParam("image") MultipartFile[] file, HttpServletRequest request, Model model,
-			@PathVariable(value = "id") int id, MedicalHistory medObj) throws IOException {
+	@RequestMapping(value = "/uploadImage/{patientId}", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public String medicalFileUploadByPatientId(@RequestParam("image") MultipartFile[] file, HttpServletRequest request, Model model,
+			@PathVariable(value = "patientId") int patientId, MedicalHistory medObj) throws IOException {
 		HttpSession session=request.getSession();
-		Patients patient = patientsService.getPatientById(id);
+		Patients patient = patientsService.getPatientById(patientId);
 		Integer a = patient.getPatientId();
 		model.addAttribute("patientObj", a);
-		log.info(patient);
+		log.debug(patient);
 		StringBuilder filejoin = new StringBuilder();
 		String UploadDir = "C:\\Users\\Lenovo\\Documents\\workspace-spring-tool-suite-4-4.14.0.RELEASE\\Vcare\\src\\main\\resources\\static\\uploads\\"
-				+ id + "\\";
-
+				+ patientId + "\\";
 		for (MultipartFile f : file) {
 			filejoin.append(f.getOriginalFilename() + ",");
 			String fileName = StringUtils.cleanPath(f.getOriginalFilename());
@@ -87,23 +76,24 @@ public class MedicalHistoryController {
 			medObj.setImageName(f.getOriginalFilename());
 			model.addAttribute("medObj", medObj);
 		}
-		MedicalHistory savedUser = repo.save(medObj);
-		log.info("savedUser" + savedUser);
+		MedicalHistory savedUser = medicalHistoryRepository.save(medObj);
+		log.debug("savedUser" + savedUser);
 		session.setAttribute("medhistory","");
 		session.setAttribute("upload","upload");
-		return "redirect:/med/view/{id}";
+		return "redirect:/med/view/{patientId}";
 	}
-
-	@RequestMapping("/view/{id}")
-	public String view(Model model, @PathVariable("id") int id, MedicalHistory medObj,HttpServletRequest request) {
-		log.info(id);
-		Patients patient = patientsService.getPatientById(id);
+	@RequestMapping("/view/{patientId}")
+	public String viewMedicalHistoryByPatientId(Model model, @PathVariable("patientId") int patientId, MedicalHistory medObj,HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		if(session.getAttribute("pId")==null) {
+			return "redirect:/";
+		}
+		Patients patient = patientsService.getPatientById(patientId);
 		model.addAttribute("patientObj", patient.getPatientId());
 		List<MedicalHistory> medicalHistoryList = medicalHistoryService.getMedicalHistory(patient);
 		model.addAttribute("medicalHistoryList", medicalHistoryList);
-		medObj = medicalHistoryService.getMedicalById(id);
-		HttpSession session=request.getSession();
-		System.out.println("request.getSession().toString()"+session.getAttribute("medhistory"));
+		medObj = medicalHistoryService.getMedicalById(patientId);
+		log.debug("request.getSession().toString()"+session.getAttribute("medhistory"));
 		if(session.getAttribute("medhistory")=="delete") {
 		model.addAttribute("patientmsg","File deleted successfully");
 		session.setAttribute("medhistory","");
@@ -112,30 +102,22 @@ public class MedicalHistoryController {
 			model.addAttribute("patientmsg","File uploaded successfully");
 			session.setAttribute("upload","");
 		}
-		return "viewmedicalhistory";
+		return "medicalhistoryview";
 	}
-
-	@GetMapping("/getimage/{id}")
-	public String Image(Model model, @PathVariable("id") int id) {
-		log.info(id);
-		MedicalHistory medObj = medicalHistoryService.getMedicalById(id);
-		log.info("str" + medObj.getHistoryPath());
+	@GetMapping("/getimage/{medicalId}")
+	public String viewImageByMedicalId(Model model, @PathVariable("medicalId") int medicalId) {
+		MedicalHistory medObj = medicalHistoryService.getMedicalById(medicalId);
+		log.debug("str" + medObj.getHistoryPath());
 		model.addAttribute("medObj", medObj.getHistoryPath());
-
-		return "viewimage";
+		return "medicalimage";
 	}
-
-	@GetMapping("/deleteimage/{id}")
-	public String deletedoctors(Model model, @PathVariable("id") int id,HttpServletRequest request) {
-		
-		MedicalHistory med=medicalHistoryService.getMedicalById(id);
+	@GetMapping("/deleteimage/{medicalId}")
+	public String deleteImageByMedicalId(Model model, @PathVariable("medicalId") int medicalId,HttpServletRequest request) {
+		MedicalHistory med=medicalHistoryService.getMedicalById(medicalId);
 		int patientid=med.getPatient().getPatientId();
-		medicalHistoryService.deleteImageById(id);
-		List<MedicalHistory> medicalHistoryList = medicalHistoryService.getAllHistory();
-		model.addAttribute("medicalHistoryList", medicalHistoryList);
+		medicalHistoryService.deleteImageById(medicalId);
 		HttpSession session=request.getSession();
 		session.setAttribute("medhistory","delete");
 		return "redirect:/med/view/"+patientid;
 	}
-
 }

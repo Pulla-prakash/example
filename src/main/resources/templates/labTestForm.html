@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title>Vcare</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="author" content="#" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+<!-- MAIN CSS -->
+<link rel="stylesheet" th:href="@{/dashboard/assets/css/final.css}" />
+
+</head>
+
+<body>
+	<!-- header -->
+	<header class="header">
+		<div class="container-fluid">
+			<div class="header-box">
+				<h4>Vcare</h4>
+				<a th:href="@{/logout}">LogOut</a>
+			</div>
+		</div>
+	</header>
+	<!-- header end -->
+	<main class="main">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xl-2 col-lg-3 col-md-4">
+					<!-- sidebar -->
+					<section class="sidebar">
+						<div class="sidebar-wrap">
+							<div class="Heading">
+								<h4>Dashboard</h4>
+							</div>
+							
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/app.png" alt=" icon" class="img-fluid" />
+								<a th:href="@{/appointmentlist/{did}(did=${session.DocId})}">Appointments</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/cal.png" alt="icon" class="img-fluid" />
+								<a th:href="@{/availabilityList/{id}(id=${session.DocId})}">Availability</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="../images/Icons/profile.png" alt="icon" class="img-fluid" />
+								<a th:href="@{/updatedDoctorProfile/{did}(did=${session.DocId})}">Doctor Profile</a>
+							</div>
+							<div class="sidebar-item">
+								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/prescriptionlist/{did}(did=${session.DocId})}">Patients Prescription</a>
+							</div>
+							
+							<div class="sidebar-item">
+								<img src="../images/Icons/prescription.jpg" alt="icon" class="img-fluid" />
+								<a th:href="@{/payment/{docId}(docId=${session.DocId})}">Payments</a>
+							</div>
+							
+							
+						</div>
+					</section>
+					<!-- sidebar end -->
+				</div>
+				<!-- main area -->
+				<div class="col-lg-10 col-md-8">
+					<div class="main-area">
+						<!-- page Heading -->
+						<div class="page-heading">
+
+
+							<h1>
+								<span style="color: black; font-size: 40px" th:text="${name}"></span>
+								Test Details 
+							</h1>
+							<h5 style="color:green;" th:text="${doctormsg}"></h5>
+
+
+						</div>
+						<!-- page Heading End -->
+
+						<!-- abailablility -->
+
+						<div class="avaliability-box">
+							<div class="form-box">
+
+								<form th:action="@{/labTest/saveTest}"
+									th:object="${labTest}" th:method="post" id="labTest"
+									enctype="multipart/form-data">
+
+
+								
+										<div class="col-md-3">
+
+											<input type="hidden" class="form-control"
+												placeholder="Enter Your Id" id="testId" name="testId"
+												th:value="*{testId}" th:readonly="true">
+										</div>
+										<div class="col-md-3">
+
+										<input type="hidden" class="form-control"
+											placeholder="Enter Your Id" id="laboratory" name="laboratory"
+											th:value="${labId}" th:readonly="true">
+									</div>
+
+									<div class="row">
+										<div class="col-md-3">
+											<label for="sep">Name</label> <input type="text"
+												class="form-control" id="testName" name="testName"
+												th:value="*{testName}" required="required"
+												>
+										</div>
+										
+											</div>
+											<div class="row">
+
+											<div class="col-md-3">
+												<label for="Update">Price</label> <input type="text"
+													class="form-control" placeholder="Price" id="price"
+													name="price" th:value="*{price}">
+											</div>
+
+										
+
+											<div class="col-md-10">
+											<label for="description"> Description</label>
+											<p id="area"></p>
+											<textarea type="text" id="about" contenteditable="true"
+												class="form-control" name="about" th:value="*{about}"
+												required="required" minlength="1" maxlength="50000"
+												th:text="*{about}"></textarea>
+
+										</div>
+										<label>Select HospitalbranchName :</label>
+										<div class="col-md-3" th:each="hb,count:${hblist}">
+										<input
+											type="checkbox" 
+											th:if="${count.size>0}";
+											name="hospitalBranchId" id=hospitalBranchId
+											th:text="${hb.hospitalBranchName}"
+											th:value="${hb.hospitalBranchId}" />
+											</div>
+									</div>
+
+									
+										
+										
+										
+																			
+
+
+										
+										</div>
+																			<div class=row>
+									<div class="col-md-3">
+									</div>
+									<div class="col-md-4">
+										<button id="btn" class="btn btn-danger btn-block">Save</button>
+									</div>
+									</div>
+								</form>
+							</div>
+
+
+
+						</div>
+					</div>
+
+					<!-- abailablility -->
+				</div>
+			</div>
+		</div>
+		<!-- main area end -->
+		</div>
+	</main>
+
+	<!-- SCRIPTS -->
+	<script src="../js/dropdown.js"></script>
+	<script src="../js/jquery.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<!-- <script src="../js/jquery.sticky.js"></script>
+    <script src="../js/jquery.stellar.min.js"></script>
+    <script src="../js/wow.min.js"></script>
+    <script src="../js/smoothscroll.js"></script>
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="./assets/js/script.js"></script> -->
+</body>
+
+</html>
